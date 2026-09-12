@@ -1,0 +1,9 @@
+/public
+/.tola
+/node_modules
+content/.tola
+.DS_Store
+/js_motiongfx/target
+/js_motiongfx/pkg
+/js_motiongfx/pkg-*
+/js_motiongfx/js/node_modules

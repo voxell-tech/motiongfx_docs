@@ -1,0 +1,11 @@
+{
+  "name": "motiongfx",
+  "version": "0.0.0",
+  "description": "MotionGfx runtime for JavaScript and TypeScript.",
+  "type": "module",
+  "main": "runtime.ts",
+  "types": "runtime.ts",
+  "license": "MIT OR Apache-2.0",
+  "repository": "https://github.com/voxell-tech/motiongfx",
+  "dependencies": {}
+}

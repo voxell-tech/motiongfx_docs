@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+
+/* Shared theme, base styles, theme-toggle + social-icon CSS. */
+@source "../../shared";
+@import "../../shared/styles.css";
+
+/* Site-specific palette additions (Monokai Pro accents) — override/extend the
+   shared @theme. */
+@theme {
+    --color-red: #ff6188;
+    --color-orange: #fc9867;
+    --color-yellow: #ffd866;
+    --color-green: #a9dc76;
+}
+
+[data-theme="light"] {
+    --color-red: #c4224f;
+    --color-orange: #b55e1e;
+    --color-yellow: #9a7000;
+    --color-green: #5a8f25;
+
+    /* Shared --color-muted (#727072) is 4.25:1 on --color-surface here,
+       under the 4.5:1 minimum for text under 18px. Darkened locally. */
+    --color-muted: #656565;
+}
+
+/* Live demo player (assets/js/mgfx-demo.js). Utility classes written
+   directly in that file are invisible to Tailwind: it only scans Typst
+   templates/content, never assets/js/**. Defined here instead, the same
+   way .markdown-body below handles other JS-rendered content. */
+.mgfx-player-shell {
+    @apply rounded-lg overflow-hidden border border-text/10 bg-surface;
+}
+
+.mgfx-player-canvas {
+    display: block;
+    width: 100%;
+}
+
+/* One row: play/pause, scrubber, time readout. */
+.mgfx-player-bar {
+    @apply flex items-center gap-2 w-full px-3 py-2 border-t border-text/10;
+}
+
+.mgfx-player-button {
+    @apply shrink-0 text-muted transition-colors cursor-pointer bg-transparent p-2 leading-none flex items-center justify-center rounded-md;
+    border: none;
+}
+.mgfx-player-button:hover {
+    @apply text-accent bg-text/5;
+}
+
+.mgfx-scrubber {
+    @apply flex-1 min-w-0 cursor-pointer;
+    appearance: none;
+    background: transparent;
+    height: 16px;
+}
+.mgfx-scrubber::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 9999px;
+    background: linear-gradient(
+        to right,
+        var(--color-accent) 0%,
+        var(--color-accent) calc(var(--mgfx-progress, 0) * 100%),
+        color-mix(in srgb, var(--color-text) 15%, transparent) calc(var(--mgfx-progress, 0) * 100%),
+        color-mix(in srgb, var(--color-text) 15%, transparent) 100%
+    );
+}
+.mgfx-scrubber::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    margin-top: -4px;
+    border-radius: 9999px;
+    background: var(--color-accent);
+}
+.mgfx-scrubber::-moz-range-track {
+    height: 4px;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-text) 15%, transparent);
+}
+.mgfx-scrubber::-moz-range-progress {
+    height: 4px;
+    border-radius: 9999px;
+    background: var(--color-accent);
+}
+.mgfx-scrubber::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 9999px;
+    background: var(--color-accent);
+}
+
+.mgfx-player-time {
+    @apply text-subtle text-xs shrink-0;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Markdown rendered content */
+.markdown-body {
+    h1, h2, h3, h4, h5, h6 { @apply font-bold text-text mt-6 mb-2; }
+    h1 { @apply text-2xl; }
+    h2 { @apply text-xl; }
+    h3 { @apply text-lg; }
+    p { @apply mb-3; }
+    ul { @apply list-disc pl-5 mb-3 space-y-1; }
+    ol { @apply list-decimal pl-5 mb-3 space-y-1; }
+    blockquote { @apply border-l-4 border-text/20 pl-4 text-muted/70 mb-3 italic; }
+    hr { @apply border-text/10 my-4; }
+    img { @apply max-w-full rounded-lg my-4; }
+}

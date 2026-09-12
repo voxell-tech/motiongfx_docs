@@ -1,0 +1,68 @@
+# ==============================================================================
+# Tola Configuration
+# ==============================================================================
+
+[site.info]
+title = "MotionGfx"
+email = "voxell.technologies@gmail.com"
+description = "A backend-agnostic motion graphics framework for procedural animation."
+language = "en"
+url = "https://motiongfx.voxell.dev"
+
+[site.header]
+icon = "assets/favicon/favicon.ico"
+elements = [
+  '<meta name="darkreader-lock">',
+  '<script src="/scripts/theme.js"></script>',
+]
+
+[site.nav]
+spa = true
+
+[site.seo]
+auto_og = true
+
+[site.seo.feed]
+enable = false
+
+[site.seo.sitemap]
+enable = true
+path = "sitemap.xml"
+
+[build]
+content = "content"
+output = "public"
+minify = true
+deps = ["templates", "utils", "components", "shared"]
+
+[build.assets]
+nested = [
+  "assets/styles",
+  "assets/fonts",
+  "assets/js",
+  "assets/wasm",
+  "shared/icons",
+  "shared/scripts"
+]
+# Serve the favicon at the site root (/favicon.ico) — the path browsers auto-request.
+flatten = [
+  { file = "assets/favicon/favicon.ico", as = "favicon.ico" }
+]
+
+[build.slug]
+path = "safe"
+fragment = "full"
+separator = "dash"
+case = "lower"
+
+# Tailwind CSS - enabled by default in this template
+# Make sure tailwindcss is installed: npm install -g tailwindcss
+[build.hooks.css]
+enable = true
+path = "assets/styles/tailwind.css"
+command = ["tailwindcss"]
+
+[serve]
+interface = "127.0.0.1"
+port = 5279
+watch = true
