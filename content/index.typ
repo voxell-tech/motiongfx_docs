@@ -174,11 +174,7 @@
 
 // Feature: backend agnostic
 #html.section(class: "py-12 px-4 sm:px-6")[
-  #html.div(class: "flex flex-col md:flex-row-reverse items-center gap-8")[
-    #html.div(class: "flex-1 flex justify-center")[
-      #html.span(class: "diagram-dark")[#html.frame(backend-diagram(dark: true))]
-      #html.span(class: "diagram-light")[#html.frame(backend-diagram(dark: false))]
-    ]
+  #html.div(class: "flex flex-col md:flex-row items-center gap-8")[
     #html.div(class: "flex-1 text-center md:text-left")[
       #html.h2(class: "text-3xl font-bold mb-2")[Backend Agnostic]
       #html.p(class: "text-muted text-lg")[
@@ -191,6 +187,10 @@
         href: "/docs/advanced",
       )[Build Your Own Backend →]
     ]
+    #html.div(class: "flex-1 flex justify-center")[
+      #html.span(class: "diagram-dark")[#html.frame(backend-diagram(dark: true))]
+      #html.span(class: "diagram-light")[#html.frame(backend-diagram(dark: false))]
+    ]
   ]
 ]
 
@@ -198,14 +198,7 @@
 
 // Feature: batteries included
 #html.section(class: "py-12 px-4 sm:px-6")[
-  #html.div(class: "flex flex-col md:flex-row items-center gap-8")[
-    #html.div(class: "flex-1 flex justify-center")[
-      #html.elem("img", attrs: (
-        src: "/icons/bevy.svg",
-        alt: "Bevy",
-        style: "height: 120px; width: auto;",
-      ))
-    ]
+  #html.div(class: "flex flex-col md:flex-row-reverse items-center gap-8")[
     #html.div(class: "flex-1 text-center md:text-left")[
       #html.h2(class: "text-3xl font-bold mb-2")[Start With Bevy]
       #html.p(class: "text-muted text-lg")[
@@ -216,6 +209,13 @@
         class: "inline-block mt-4 px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:opacity-90 transition-opacity",
         href: "/docs/bevy",
       )[Set Up Bevy MotionGfx →]
+    ]
+    #html.div(class: "flex-1 flex justify-center")[
+      #html.elem("img", attrs: (
+        src: "/icons/bevy.svg",
+        alt: "Bevy",
+        style: "height: 120px; width: auto;",
+      ))
     ]
   ]
 ]
