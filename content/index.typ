@@ -8,63 +8,68 @@
 // "Backend Agnostic" diagram: a real node/edge graph via CeTZ, embedded
 // as an SVG via html.frame the same way templates/tola.typ embeds math.
 // MotionGfx is the one core; backends are interchangeable pieces that
-// snap onto it, like picking a Lego brick, not a fixed pipeline — Bevy's
+// snap onto it, like picking a Lego brick, not a fixed pipeline: Bevy's
 // the one that exists today (solid line), the others are dashed:
-// pluggable, not built yet. Tradeoff: colors are baked into the SVG at
-// build time, so this one diagram won't follow the light/dark toggle
-// the rest of the page does; picked tones that read on both.
-#let backend-diagram = box(inset: 20pt)[
-  #set text(font: "Inter")
-  #canvas(length: 1cm, {
-    import draw: *
+// pluggable, not built yet.
+//
+// Colors bake into the SVG at build time, so this can't react live to
+// the theme toggle the way the rest of the page's CSS does — instead,
+// both variants get rendered up front (reusing this site's own light/
+// dark tokens from shared/styles.css) and toggled with the same
+// [data-theme] CSS technique the shared nav's sun/moon icon already
+// uses (see .diagram-dark/.diagram-light in tailwind.css).
+#let backend-diagram(dark: true) = {
+  let accent = if dark { rgb("#78dce8") } else { rgb("#0d7a8a") }
+  let accent-fill = if dark { rgb("#78dce826") } else { rgb("#0d7a8a1a") }
+  let muted = if dark { rgb("#939293") } else { rgb("#727072") }
+  let dim = if dark { rgb("#5b5a5c") } else { rgb("#b5b3b5") }
+  let muted-text = if dark { rgb("#fcfcfa") } else { rgb("#2d2a2e") }
 
-    let accent = rgb("#3fa7b8")
-    let accent-fill = rgb("#78dce826")
-    let accent-stroke = rgb("#78dce8")
-    let muted = rgb("#8a8a8a")
-    let dim = rgb("#6a6a6a")
-    let muted-text = rgb("#c8c8c8")
+  box(inset: 20pt)[
+    #canvas(length: 1cm, {
+      import draw: *
 
-    let piece(label, dashed: false) = box(
-      radius: 8pt,
-      stroke: (
-        paint: if dashed { dim } else { muted },
-        thickness: 1.5pt,
-        dash: if dashed { "dashed" } else { none },
-      ),
-      inset: (x: 12pt, y: 8pt),
-    )[#text(fill: muted-text, size: 10pt)[#label]]
-
-    content((0.0, 0.0), name: "core")[
-      #box(
+      let piece(label, dashed: false) = box(
         radius: 8pt,
-        fill: accent-fill,
-        stroke: 1.5pt + accent-stroke,
-        inset: (x: 14pt, y: 8pt),
-      )[#text(fill: accent, weight: "bold", size: 13pt)[MotionGfx]]
-    ]
-    content((-3.0, -2.2), name: "bevy")[#piece("Bevy")]
-    content((0.0, -2.2), name: "custom")[#piece("Your Renderer", dashed: true)]
-    content((3.0, -2.2), name: "more")[#piece("...", dashed: true)]
+        stroke: (
+          paint: if dashed { dim } else { muted },
+          thickness: 1.5pt,
+          dash: if dashed { "dashed" } else { none },
+        ),
+        inset: (x: 12pt, y: 8pt),
+      )[#text(fill: muted-text, size: 10pt)[#label]]
 
-    line("core.south", "bevy.north", stroke: 1.5pt + accent, mark: (
-      end: ">",
-      fill: accent,
-    ))
-    line(
-      "core.south",
-      "custom.north",
-      stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"),
-      mark: (end: ">", fill: dim),
-    )
-    line(
-      "core.south",
-      "more.north",
-      stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"),
-      mark: (end: ">", fill: dim),
-    )
-  })
-]
+      content((0.0, 0.0), name: "core")[
+        #box(
+          radius: 8pt,
+          fill: accent-fill,
+          stroke: 1.5pt + accent,
+          inset: (x: 14pt, y: 8pt),
+        )[#text(fill: accent, weight: "bold", size: 13pt)[MotionGfx]]
+      ]
+      content((-3.0, -2.2), name: "bevy")[#piece("Bevy")]
+      content((0.0, -2.2), name: "custom")[#piece("Your Renderer", dashed: true)]
+      content((3.0, -2.2), name: "more")[#piece("...", dashed: true)]
+
+      line("core.south", "bevy.north", stroke: 1.5pt + accent, mark: (
+        end: ">",
+        fill: accent,
+      ))
+      line(
+        "core.south",
+        "custom.north",
+        stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"),
+        mark: (end: ">", fill: dim),
+      )
+      line(
+        "core.south",
+        "more.north",
+        stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"),
+        mark: (end: ">", fill: dim),
+      )
+    })
+  ]
+}
 
 // Hero
 #html.div(class: "text-center py-20 px-5")[
@@ -171,7 +176,8 @@
 #html.section(class: "py-12 px-4 sm:px-6")[
   #html.div(class: "flex flex-col md:flex-row-reverse items-center gap-8")[
     #html.div(class: "flex-1 flex justify-center")[
-      #html.frame(backend-diagram)
+      #html.span(class: "diagram-dark")[#html.frame(backend-diagram(dark: true))]
+      #html.span(class: "diagram-light")[#html.frame(backend-diagram(dark: false))]
     ]
     #html.div(class: "flex-1 text-center md:text-left")[
       #html.h2(class: "text-3xl font-bold mb-2")[Backend Agnostic]

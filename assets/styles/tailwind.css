@@ -13,6 +13,17 @@
     --color-green: #a9dc76;
 }
 
+/* Backend Agnostic diagram (content/index.typ): both a dark- and a
+   light-tinted render of the same CeTZ diagram ship in the page, since
+   the SVG's colors bake in at build time and can't react live the way
+   this file's own colors do. Toggled the same way shared/styles.css
+   already does for the nav's sun/moon icon. */
+.diagram-dark { display: inline; }
+.diagram-light { display: none; }
+
+[data-theme="light"] .diagram-dark { display: none; }
+[data-theme="light"] .diagram-light { display: inline; }
+
 /* The Discord/Voxell nav links (templates/base.typ) reuse the shared
    footer's mask-tinted .social-icon, but the shared nav's own <a>
    doesn't carry .social-link, so the hover-to-accent recolor (which
