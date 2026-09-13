@@ -137,8 +137,3 @@ delay(cs(30), frag_a.play(s(1)))
     ))
   ],
 )
-
-== Next
-
-#link("/docs/concepts/timeline")[Timeline]: turn the result into something
-you can play.

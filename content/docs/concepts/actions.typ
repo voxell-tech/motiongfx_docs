@@ -34,8 +34,3 @@ the two values, instead of a straight line:
 ```rust
 let fragment = action.with_ease(ease::cubic::ease_in_out).play(s(1));
 ```
-
-== Next
-
-#link("/docs/concepts/ordering")[Ordering]: combine several fragments
-together.

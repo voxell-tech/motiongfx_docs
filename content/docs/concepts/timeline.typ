@@ -59,8 +59,3 @@ around, run it backward: nothing gets re-simulated.
   script: "/js/demos/timeline-showcase.js",
   caption: [Flow in, then a bounce ripples through the row, flashing color as it goes.],
 )
-
-== Next
-
-#link("/docs/advanced")[Building a Backend] covers what `registry` and
-`world` actually are.

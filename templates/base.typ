@@ -45,19 +45,48 @@
     href: repr(it.dest).replace("\"", ""),
   )[#it.body]
 
+  // Both badges match the page's own dark-mode bg (#19181a) instead of
+  // shields.io's default color, so they blend into the nav instead of
+  // showing a boxed background — shields.io has no true transparent
+  // option (`color=transparent` and an 8-digit alpha hex both just fall
+  // back to their default green), and it won't match in light mode
+  // since there's no way to make a static badge image react to the
+  // theme toggle. `flat-square` over `for-the-badge`: the latter bakes
+  // generous internal padding into the SVG itself as part of its look,
+  // which can't be stripped via CSS on an opaque <img>.
   let github-badge = html.elem("img", attrs: (
-    src: "https://img.shields.io/github/stars/voxell-tech/motiongfx?style=flat&logo=github&label=",
+    src: "https://img.shields.io/github/stars/voxell-tech/motiongfx?style=flat-square&logo=github&logoColor=white&label=&color=19181a",
     height: "20",
     alt: "GitHub stars",
     style: "display: inline-block; vertical-align: middle;",
   ))
 
-  nav(links: (
-    (label: [Docs], href: "/docs", match: "/docs"),
-    (label: github-badge, href: "https://github.com/voxell-tech/motiongfx", external: true),
-    (label: [Discord ↗], href: links.discord, external: true),
-    (label: [Voxell ↗], href: links.website, external: true),
+  let discord-badge = html.elem("img", attrs: (
+    src: "https://img.shields.io/discord/442334985471655946?style=flat-square&logo=discord&logoColor=white&label=&color=19181a",
+    height: "20",
+    alt: "Discord online",
+    style: "display: inline-block; vertical-align: middle;",
   ))
+
+  // Mask-tinted icon, same technique the shared footer's social links use
+  // (see shared/components/social.typ and .social-icon in styles.css) —
+  // it recolors via `background-color` instead of baking in a fixed
+  // color, so it inherits hover/theme changes the way text links do.
+  let nav-icon(icon, label) = html.elem("span", attrs: (
+    class: "social-icon",
+    style: "--icon: url('/icons/" + icon + "')",
+  ))[#html.span(class: "sr-only")[#label]]
+
+  nav(
+    brand: html.span(class: "font-semibold text-text")[Home],
+    gap: "gap-3",
+    links: (
+      (label: [Docs], href: "/docs", match: "/docs"),
+      (label: github-badge, href: "https://github.com/voxell-tech/motiongfx", external: true),
+      (label: discord-badge, href: links.discord, external: true),
+      (label: nav-icon("voxell.svg", "Voxell"), href: links.website, external: true),
+    ),
+  )
 
   let main-class = if current-permalink != none and current-permalink.starts-with("/docs") {
     "max-w-7xl mx-auto px-4 py-8"
@@ -73,4 +102,5 @@
 
   html.elem("script", attrs: (type: "module", src: "/js/syntax-highlight.js"))[]
   html.elem("script", attrs: (type: "module", src: "/js/demo-bootstrap.js"))[]
+  html.elem("script", attrs: (type: "module", src: "/js/docs-nav.js"))[]
 }

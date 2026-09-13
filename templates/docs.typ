@@ -4,7 +4,7 @@
 #import "/templates/tola.typ": wrap-page
 #import "/templates/base.typ": base, colors
 #import "/utils/tola.typ": cls
-#import "/components/docs-nav.typ": sidebar
+#import "/components/docs-nav.typ": sidebar, page-nav
 #import "@tola/site:0.0.0": info
 
 #let docs-page = wrap-page(
@@ -21,12 +21,13 @@
     show heading.where(level: 1): it => html.h2(class: cls("text-2xl sm:text-3xl font-bold mt-8 mb-4", colors.accent))[#it.body]
     show heading.where(level: 2): it => html.h3(class: "text-lg sm:text-xl font-semibold mt-6 mb-3")[#it.body]
 
-    // Content first in source order so mobile (flex-col, equal order:0)
-    // reaches it before the nav; `md:order-first` on the sidebar pulls it
-    // back to the left column once there's room for both side by side.
-    html.div(class: "flex flex-col md:flex-row md:justify-center gap-8 md:gap-10 items-start")[
-      #html.div(class: "min-w-0 flex-1 max-w-3xl text-base")[#body]
-      #sidebar()
+    // The sidebar is fixed-positioned at every size (see docs-nav.typ),
+    // so it never occupies flow space here — `md:ml-64` on the content
+    // column just clears the desktop rail it becomes from md: up.
+    sidebar()
+    html.div(class: "max-w-3xl md:ml-64 text-base")[
+      #body
+      #page-nav()
     ]
   },
 )

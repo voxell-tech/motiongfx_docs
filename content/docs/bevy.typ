@@ -68,8 +68,3 @@ A blue cube slides right and turns red over one second.
 `BevyMotionGfxPlugin` adds a `MotionGfxManager` resource. That's the only
 setup it needs: `motiongfx.create_builder()` gives you a builder that
 already knows how to animate any Bevy entity's components.
-
-== Next
-
-#link("/docs/concepts/actions")[Concepts]: what `act`, `play`, and
-`compile` are actually doing.
