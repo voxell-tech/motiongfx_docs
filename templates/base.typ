@@ -45,10 +45,15 @@
     "border-l-4 border-accent pl-4 my-4 italic",
     colors.muted,
   ))[#it.body]
-  show link: it => html.a(
-    class: cls("underline underline-offset-4", "hover:" + colors.accent),
-    href: repr(it.dest).replace("\"", ""),
-  )[#it.body]
+  show link: it => {
+    let href = repr(it.dest).replace("\"", "")
+    let external = href.starts-with("http")
+    html.a(
+      class: cls("underline underline-offset-4", "hover:" + colors.accent),
+      href: href,
+      ..if external { (target: "_blank", rel: ("noopener", "noreferrer")) },
+    )[#it.body]
+  }
 
   // Both badges match the page's own dark-mode bg (#19181a) instead of
   // shields.io's default color, so they blend into the nav instead of
