@@ -84,7 +84,11 @@
   ]
 ]
 
-/// Side-by-side showcase card: source code + rendered output.
+/// Side-by-side showcase card: source code + rendered output. Two
+/// columns from md: up (stacked below that, where there's no room to
+/// put them side by side); pass `reverse: true` to swap which side the
+/// preview lands on, e.g. alternating across a page's sections so they
+/// don't all read the same direction.
 #let showcase-demo(
   title: none,
   description: none,
@@ -92,16 +96,20 @@
   preview: none,
   code-label: "Typst Code",
   preview-label: "Rendered Output",
+  reverse: false,
 ) = {
   assert(title != none, message: "showcase-demo: `title` is required")
   assert(code != none, message: "showcase-demo: `code` is required")
   assert(preview != none, message: "showcase-demo: `preview` is required")
 
+  let code-order = if reverse { "md:order-2" } else { "md:order-1" }
+  let preview-order = if reverse { "md:order-1" } else { "md:order-2" }
+
   html.section(
-    class: "my-8 rounded-lg border border-text/10 bg-gradient-to-br from-bg/80 via-bg/50 to-surface/20 p-4 sm:p-6",
+    class: "my-8 rounded-lg bg-gradient-to-br from-bg/80 via-bg/50 to-surface/20 p-4 sm:p-6",
   )[
     #html.div(class: "mb-4")[
-      #html.h3(class: "text-lg sm:text-xl font-semibold text-accent")[
+      #html.h3(class: "text-3xl font-bold mb-2")[
         #title
       ]
       #if description != none {
@@ -111,9 +119,9 @@
       }
     ]
 
-    #html.div(class: "grid gap-4")[
+    #html.div(class: "grid gap-4 md:grid-cols-2 md:items-stretch")[
       #html.div(
-        class: "rounded-lg border border-text/10 bg-bg/70 overflow-hidden",
+        class: "rounded-lg border border-text/10 bg-bg/70 overflow-hidden " + code-order,
       )[
         #html.div(
           class: "border-b border-text/10 px-3 py-2 text-xs uppercase tracking-wide text-muted",
@@ -126,7 +134,7 @@
       ]
 
       #html.div(
-        class: "rounded-lg border border-accent/30 bg-surface/40 overflow-hidden",
+        class: "rounded-lg border border-accent/30 bg-surface/40 overflow-hidden " + preview-order,
       )[
         #html.div(
           class: "border-b border-accent/20 px-3 py-2 text-xs uppercase tracking-wide text-accent",
@@ -192,7 +200,7 @@
 
 /// A small labeled box drawn around one level of a combinator's
 /// nesting, e.g. `ui.group(label: "chain")[#ui.group(label: "all")[...]
-/// #ui.track-row(...)]` for `chain([all([...]), frag_c])` — mirroring
+/// #ui.track-row(...)]` for `chain([all([...]), frag_c])`, mirroring
 /// the Rust code's own nesting, like the reference timeline's boxes.
 #let group(label: none, body) = html.div(
   class: "border border-text/10 rounded-md p-1.5 flex flex-col gap-1",

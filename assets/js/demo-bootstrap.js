@@ -4,7 +4,7 @@
 // Tola's SPA router morphs the page body in on navigation rather than
 // doing a full reload, and per the HTML spec, a `<script>` element
 // inserted that way (via innerHTML-style DOM patching, not a real
-// parse) never executes — that's true of any script, module or not,
+// parse) never executes: that's true of any script, module or not,
 // regardless of whether its URL was already loaded on a previous page.
 // So a demo whose only page never happened to be the one you hard-
 // loaded would sit there with a bare canvas forever: no controls, no

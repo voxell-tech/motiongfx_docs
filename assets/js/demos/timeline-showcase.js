@@ -47,7 +47,7 @@ mountDemo("#timeline-showcase-demo", {
     );
 
     // Wave: once everyone's landed, a bounce ripples through the row
-    // (via `flow` again) — each circle grows and flashes back toward
+    // (via `flow` again): each circle grows and flashes back toward
     // cyan (`all`), then shrinks and settles back to purple (`chain`
     // sequencing the two halves of the bounce).
     const wave = flow(

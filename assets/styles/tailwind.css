@@ -4,7 +4,7 @@
 @source "../../shared";
 @import "../../shared/styles.css";
 
-/* Site-specific palette additions (Monokai Pro accents) — override/extend the
+/* Site-specific palette additions (Monokai Pro accents): override/extend the
    shared @theme. */
 @theme {
     --color-red: #ff6188;
@@ -15,7 +15,7 @@
 
 /* The Discord/Voxell nav links (templates/base.typ) reuse the shared
    footer's mask-tinted .social-icon, but the shared nav's own <a>
-   doesn't carry .social-link — so the hover-to-accent recolor (which
+   doesn't carry .social-link, so the hover-to-accent recolor (which
    .social-icon normally gets from that class) is wired up locally here. */
 nav a:hover .social-icon {
     background-color: var(--color-accent);
@@ -24,7 +24,7 @@ nav a:hover .social-icon {
 /* .social-icon has no vertical-align of its own (fine next to its own
    label in the footer), but baseline-aligning an empty icon span reads
    as visibly "lifted" next to plain text and <img> icons in the tight
-   nav row — center it on the line instead, scoped to nav so the
+   nav row; center it on the line instead, scoped to nav so the
    footer's own look is untouched. */
 nav .social-icon {
     vertical-align: middle;
@@ -116,10 +116,10 @@ nav .social-icon {
 }
 
 /* Docs "Chapters" nav (components/docs-nav.typ): a native <details>
-   disclosure, collapsed behind this ghost icon toggle on mobile — a
+   disclosure, collapsed behind this ghost icon toggle on mobile, a
    plain icon in normal document flow, no button chip, so it never
-   overlaps the page title. The toggle hides itself entirely from md: up
-   — assets/js/docs-nav.js is what actually keeps the element open
+   overlaps the page title. The toggle hides itself entirely from md: up;
+   assets/js/docs-nav.js is what actually keeps the element open
    there, rather than a CSS override trying to beat the browser's own
    closed-<details> content hiding. */
 .docs-nav-toggle {
@@ -147,7 +147,7 @@ nav .social-icon {
 /* bg-bg here, not bg-surface: the active link's own highlight pill is
    bg-surface (shared with the desktop rail, see the loop in
    docs-nav.typ), and it needs to contrast against the drawer behind it
-   the same way it contrasts against the page on desktop — bg-surface
+   the same way it contrasts against the page on desktop; bg-surface
    on both would make the active page's highlight invisible on mobile. */
 .docs-nav-body {
     @apply fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] overflow-y-auto bg-bg border-r border-text/10 shadow-xl p-4;

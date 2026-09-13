@@ -44,9 +44,14 @@ nested = [
   "shared/icons",
   "shared/scripts"
 ]
-# Serve the favicon at the site root (/favicon.ico) — the path browsers auto-request.
+# Serve the favicon at the site root (/favicon.ico), the path browsers
+# auto-request. Site-specific icons (not shared across Voxell's sites,
+# so they don't belong in shared/icons/) go here too, one at a time,
+# since `nested` maps a whole directory to its basename and assets/icons
+# would collide with shared/icons both wanting to output to /icons.
 flatten = [
-  { file = "assets/favicon/favicon.ico", as = "favicon.ico" }
+  { file = "assets/favicon/favicon.ico", as = "favicon.ico" },
+  { file = "assets/icons/bevy.svg", as = "icons/bevy.svg" }
 ]
 
 [build.slug]

@@ -2,7 +2,7 @@
 // desktop. A closed <details>'s content is hidden by the browser itself
 // (per the HTML spec's own `details:not([open]) > :not(summary)` rule),
 // and that isn't something a plain CSS override can be relied on to
-// beat consistently across engines — so this sets `.open` directly
+// beat consistently across engines, so this sets `.open` directly
 // instead, based on viewport width, the same way theme-toggle.js and
 // friends handle their own bit of persistent interactive state.
 //
@@ -23,7 +23,7 @@ function openOnDesktop() {
 // from desktop down to mobile needs to actually clear the `open`
 // attribute desktop set, not just leave it (that attribute doesn't
 // know the viewport shrank, so the drawer would render open on mobile
-// otherwise — this is the one place it's set to false explicitly).
+// otherwise: this is the one place it's set to false explicitly).
 function syncOnBreakpointChange() {
   document.querySelectorAll(".docs-nav").forEach((details) => {
     details.open = isDesktop.matches;

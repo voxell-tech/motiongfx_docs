@@ -1,8 +1,57 @@
 #import "/templates/page.typ": page
 #import "/components/ui.typ" as ui
 #import "/components/layout.typ" as layout
+#import "@preview/cetz:0.5.2": canvas, draw
 
 #show: page.with(title: none)
+
+// "Backend Agnostic" diagram: a real node/edge graph via CeTZ, embedded
+// as an SVG via html.frame the same way templates/tola.typ embeds math.
+// MotionGfx is the one core; backends are interchangeable pieces that
+// snap onto it, like picking a Lego brick, not a fixed pipeline — Bevy's
+// the one that exists today (solid line), the others are dashed:
+// pluggable, not built yet. Tradeoff: colors are baked into the SVG at
+// build time, so this one diagram won't follow the light/dark toggle
+// the rest of the page does; picked tones that read on both.
+#let backend-diagram = box(
+  fill: rgb("#1e1e1e"),
+  stroke: 1pt + rgb("#3a3a3a"),
+  radius: 12pt,
+  inset: 20pt,
+)[
+  #canvas(length: 1cm, {
+    import draw: *
+
+    let accent = rgb("#3fa7b8")
+    let accent-fill = rgb("#78dce826")
+    let accent-stroke = rgb("#78dce8")
+    let muted = rgb("#8a8a8a")
+    let dim = rgb("#6a6a6a")
+    let muted-text = rgb("#c8c8c8")
+
+    let piece(label, dashed: false) = box(
+      radius: 8pt,
+      stroke: (paint: if dashed { dim } else { muted }, thickness: 1.5pt, dash: if dashed { "dashed" } else { none }),
+      inset: (x: 12pt, y: 8pt),
+    )[#text(fill: muted-text, size: 10pt)[#label]]
+
+    content((0.0, 0.0), name: "core")[
+      #box(
+        radius: 8pt,
+        fill: accent-fill,
+        stroke: 1.5pt + accent-stroke,
+        inset: (x: 14pt, y: 8pt),
+      )[#text(fill: accent, weight: "bold", size: 13pt)[MotionGfx]]
+    ]
+    content((-3.0, -2.2), name: "bevy")[#piece("Bevy")]
+    content((0.0, -2.2), name: "custom")[#piece("Your Renderer", dashed: true)]
+    content((3.0, -2.2), name: "more")[#piece("...", dashed: true)]
+
+    line("core.south", "bevy.north", stroke: 1.5pt + accent, mark: (end: ">", fill: accent))
+    line("core.south", "custom.north", stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"), mark: (end: ">", fill: dim))
+    line("core.south", "more.north", stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"), mark: (end: ">", fill: dim))
+  })
+]
 
 // Hero
 #html.div(class: "text-center py-20 px-5")[
@@ -20,70 +69,128 @@
       href: "/docs",
     )[Get Started]
     #html.a(
-      class: "px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold text-lg hover:border-accent/50 hover:text-accent transition-colors",
+      class: "flex items-center gap-2 px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold text-lg hover:border-accent/50 hover:text-accent transition-colors",
       href: "https://github.com/voxell-tech/motiongfx",
       target: "_blank",
       rel: ("noopener", "noreferrer"),
-    )[View on GitHub ↗]
+    )[
+      #html.elem("span", attrs: (class: "social-icon", style: "--icon: url('/icons/github.svg'); background-color: currentColor;"))
+      View on GitHub ↗
+    ]
   ]
 ]
 
 #layout.hr
 
-// Feature: procedural, type-erased animation
+// Feature: relative actions
 #ui.showcase-demo(
-  title: "Procedural, Not Keyframed",
-  description: "Describe how a value changes and let the timeline compile it. No hand-placed keyframes to keep in sync.",
+  title: "Relative, Not Absolute",
+  description: "An action's closure receives the field's current value, so each step can build on wherever the last one left off, not jump to a fixed number pulled from nowhere.",
   code-label: "Rust",
   preview-label: "Live Playground",
   code: [
     ```rust
-    // subject, field, and its new value
-    let grow = b.act(RADIUS, path!(<f32>), |_| 70.0)
-        .with_ease(ease::cubic::ease_in_out)
-        .play(s(1));
+    let deltas = [Vec2::new(180.0, 50.0), Vec2::new(180.0, -100.0), Vec2::new(180.0, 50.0)];
+    let tracks = deltas.map(|delta| b.act(dot, path!(<Circle>::position), |p| p + delta)
+        .play(s(0.5)));
 
-    let track = grow.compile();
+    tracks.ord_chain()
     ```
   ],
-  preview: html.elem("div", attrs: (
-    class: "flex flex-col items-center justify-center gap-3 h-full min-h-32",
-    // Not a `<script>` tag: see assets/js/demo-bootstrap.js for why an
-    // inserted script never runs after Tola's SPA navigation, and why
-    // this data attribute is what actually loads the demo instead.
-    data-demo-src: "/js/demos/landing.js",
-  ))[
-    #html.elem("canvas", attrs: (
-      id: "landing-demo",
-      width: "160",
-      height: "160",
-      style: "width: 160px; height: 160px;",
-    ))[]
-    #html.p(class: "text-subtle text-sm")[Running live, in this page, right now.]
-  ],
+  preview: ui.player-block(
+    id: "relative-demo",
+    script: "/js/demos/relative-demo.js",
+    caption: [Each step starts where the last one stopped.],
+  ),
 )
 
-// Feature: batteries included
-#html.section(class: "py-12")[
-  #html.h2(class: "text-3xl font-bold mb-2 text-center")[Start With Bevy]
-  #html.p(class: "text-muted text-center max-w-xl mx-auto text-lg")[
-    Bevy MotionGfx wires everything up for you: add the plugin, describe
-    what should change, and it plays. No boilerplate to write.
-  ]
-  #html.p(class: "text-subtle text-center max-w-xl mx-auto mt-3")[
-    Using a different engine, or your own renderer? See
-    #html.a(href: "/docs/advanced")[Building a Backend] to plug it in.
+// Feature: it's just code
+#ui.showcase-demo(
+  title: "It's Just Code",
+  description: "No special timeline UI to hand-place anything in: a scene is built with the same loops and variables you already reach for.",
+  code-label: "Rust",
+  preview-label: "Live Playground",
+  code: [
+    ```rust
+    let stagger = cs(6);
+    let tracks = bars.iter()
+        .zip(heights)
+        .map(|(bar, height)| b.act(*bar, path!(<Bar>::height), |_| height)
+            .play(s(0.6)))
+        .collect::<Vec<_>>();
+
+    tracks.ord_flow(stagger)
+    ```
+  ],
+  preview: ui.player-block(
+    id: "loop-demo",
+    script: "/js/demos/loop-demo.js",
+    caption: [Ten bars, one `.map()`, one shared variable.],
+  ),
+  reverse: true,
+)
+
+// Feature: two-way playback
+#ui.showcase-demo(
+  title: "Scrub Forward and Backward, for Free",
+  description: "Every timeline bakes once, then plays at any speed, in either direction, or jumps straight to a frame. No extra computation, no re-simulation.",
+  code-label: "Rust",
+  preview-label: "Live Playground",
+  code: [
+    ```rust
+    // Any time, any order: forward, backward, twice at once.
+    timeline.set_target_time(cs(50));
+    timeline.queue_actions();
+    timeline.sample_queued_actions(&registry, &mut world);
+    ```
+  ],
+  preview: ui.player-block(
+    id: "bounce-demo",
+    script: "/js/demos/bounce-demo.js",
+    caption: [Drag the scrubber, backward costs the same as forward.],
+  ),
+)
+
+// Feature: backend agnostic
+#html.section(class: "py-12 px-4 sm:px-6")[
+  #html.div(class: "flex flex-col md:flex-row-reverse items-center gap-8")[
+    #html.div(class: "flex-1 flex justify-center")[
+      #html.frame(backend-diagram)
+    ]
+    #html.div(class: "flex-1 text-center md:text-left")[
+      #html.h2(class: "text-3xl font-bold mb-2")[Backend Agnostic]
+      #html.p(class: "text-muted text-lg")[
+        MotionGfx describes what changes, never how it gets drawn. Any
+        renderer that can read a value back can play it: Bevy today,
+        anything else tomorrow.
+      ]
+      #html.a(
+        class: "inline-block mt-4 px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold hover:border-accent/50 hover:text-accent transition-colors",
+        href: "/docs/advanced",
+      )[Build Your Own Backend →]
+    ]
   ]
 ]
 
 #layout.hr
 
-// Feature: two-way playback
-#html.section(class: "py-12")[
-  #html.h2(class: "text-3xl font-bold mb-2 text-center")[Scrub Forward and Backward, for Free]
-  #html.p(class: "text-muted text-center max-w-xl mx-auto text-lg")[
-    Every timeline bakes once, then plays at any speed, in either direction,
-    or jumps straight to a frame. No extra computation, no re-simulation.
+// Feature: batteries included
+#html.section(class: "py-12 px-4 sm:px-6")[
+  #html.div(class: "flex flex-col md:flex-row items-center gap-8")[
+    #html.div(class: "flex-1 flex justify-center")[
+      #html.elem("img", attrs: (src: "/icons/bevy.svg", alt: "Bevy", style: "height: 120px; width: auto;"))
+    ]
+    #html.div(class: "flex-1 text-center md:text-left")[
+      #html.h2(class: "text-3xl font-bold mb-2")[Start With Bevy]
+      #html.p(class: "text-muted text-lg")[
+        Bevy MotionGfx wires everything up for you: add the plugin, describe
+        what should change, and it plays. No boilerplate to write.
+      ]
+      #html.a(
+        class: "inline-block mt-4 px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:opacity-90 transition-opacity",
+        href: "/docs/bevy",
+      )[Set Up Bevy MotionGfx →]
+    ]
   ]
 ]
 

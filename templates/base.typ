@@ -4,7 +4,6 @@
 #import "/templates/tola.typ" as tola
 #import "/utils/tola.typ": cls
 #import "/components/ui.typ" as ui
-#import "@tola/current:0.0.0": current-permalink
 #import "/shared/components/nav.typ": nav
 #import "/shared/components/footer.typ": footer
 #import "/shared/links.typ": links
@@ -47,7 +46,7 @@
 
   // Both badges match the page's own dark-mode bg (#19181a) instead of
   // shields.io's default color, so they blend into the nav instead of
-  // showing a boxed background — shields.io has no true transparent
+  // showing a boxed background: shields.io has no true transparent
   // option (`color=transparent` and an 8-digit alpha hex both just fall
   // back to their default green), and it won't match in light mode
   // since there's no way to make a static badge image react to the
@@ -69,7 +68,7 @@
   ))
 
   // Mask-tinted icon, same technique the shared footer's social links use
-  // (see shared/components/social.typ and .social-icon in styles.css) —
+  // (see shared/components/social.typ and .social-icon in styles.css):
   // it recolors via `background-color` instead of baking in a fixed
   // color, so it inherits hover/theme changes the way text links do.
   let nav-icon(icon, label) = html.elem("span", attrs: (
@@ -88,17 +87,13 @@
     ),
   )
 
-  let main-class = if current-permalink != none and current-permalink.starts-with("/docs") {
-    "max-w-7xl mx-auto px-4 py-8"
-  } else {
-    "max-w-3xl mx-auto px-4 py-8"
-  }
-  html.main(class: main-class)[#body]
+  // Every page (docs and home alike) gets the same wide container; each
+  // page's own content narrows individual reading columns where it
+  // wants to (docs.typ's prose column, the landing page's hero/prose
+  // sections), rather than the page shell doing it for them.
+  html.main(class: "max-w-7xl mx-auto px-4 py-8")[#body]
 
-  // Footer on sub-pages only, not the home page.
-  if current-permalink != none and current-permalink != "/" {
-    footer()
-  }
+  footer()
 
   html.elem("script", attrs: (type: "module", src: "/js/syntax-highlight.js"))[]
   html.elem("script", attrs: (type: "module", src: "/js/demo-bootstrap.js"))[]

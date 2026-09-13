@@ -27,7 +27,7 @@
   ),
 )
 
-// Every item across every group, in reading order — what `next-page()`
+// Every item across every group, in reading order: what `next-page()`
 // walks to find what comes after the current page.
 #let flat-items = groups.map(g => g.items).flatten()
 
