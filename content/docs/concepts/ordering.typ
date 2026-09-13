@@ -109,11 +109,21 @@ circles.iter().map(|c| c.play(cs(60))).ord_flow(cs(15))
   script: "/js/demos/ordering-flow.js",
   caption: [A wave ripples through the row: each circle starts shortly after the last, not after it finishes.],
   diagram: ui.group(label: "flow")[
-    #ui.track-row(total: 1.2, blocks: ((label: "c0", color: "#78dce8", start: 0.0, end: 0.6),))
-    #ui.track-row(total: 1.2, blocks: ((label: "c1", color: "#78dce8", start: 0.15, end: 0.75),))
-    #ui.track-row(total: 1.2, blocks: ((label: "c2", color: "#78dce8", start: 0.3, end: 0.9),))
-    #ui.track-row(total: 1.2, blocks: ((label: "c3", color: "#78dce8", start: 0.45, end: 1.05),))
-    #ui.track-row(total: 1.2, blocks: ((label: "c4", color: "#78dce8", start: 0.6, end: 1.2),))
+    #ui.track-row(total: 1.2, blocks: (
+      (label: "c0", color: "#78dce8", start: 0.0, end: 0.6),
+    ))
+    #ui.track-row(total: 1.2, blocks: (
+      (label: "c1", color: "#78dce8", start: 0.15, end: 0.75),
+    ))
+    #ui.track-row(total: 1.2, blocks: (
+      (label: "c2", color: "#78dce8", start: 0.3, end: 0.9),
+    ))
+    #ui.track-row(total: 1.2, blocks: (
+      (label: "c3", color: "#78dce8", start: 0.45, end: 1.05),
+    ))
+    #ui.track-row(total: 1.2, blocks: (
+      (label: "c4", color: "#78dce8", start: 0.6, end: 1.2),
+    ))
   ],
 )
 

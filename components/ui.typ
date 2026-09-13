@@ -121,7 +121,8 @@
 
     #html.div(class: "grid gap-4 md:grid-cols-2 md:items-stretch")[
       #html.div(
-        class: "rounded-lg border border-text/10 bg-bg/70 overflow-hidden " + code-order,
+        class: "rounded-lg border border-text/10 bg-bg/70 overflow-hidden "
+          + code-order,
       )[
         #html.div(
           class: "border-b border-text/10 px-3 py-2 text-xs uppercase tracking-wide text-muted",
@@ -134,7 +135,8 @@
       ]
 
       #html.div(
-        class: "rounded-lg border border-accent/30 bg-surface/40 overflow-hidden " + preview-order,
+        class: "rounded-lg border border-accent/30 bg-surface/40 overflow-hidden "
+          + preview-order,
       )[
         #html.div(
           class: "border-b border-accent/20 px-3 py-2 text-xs uppercase tracking-wide text-accent",
@@ -161,7 +163,13 @@
 /// as `data-demo-src`, and assets/js/demo-bootstrap.js (loaded once,
 /// present on every page) dynamically `import()`s it, which works
 /// regardless of how the calling markup was inserted.
-#let player-block(id: none, script: none, width: 680, height: 170, caption: none) = {
+#let player-block(
+  id: none,
+  script: none,
+  width: 680,
+  height: 170,
+  caption: none,
+) = {
   assert(id != none, message: "live-demo: `id` is required")
   assert(script != none, message: "live-demo: `script` is required")
 
@@ -192,9 +200,21 @@
 /// `width`/`height` set the canvas's logical coordinate space (what the
 /// demo's own `x`/`y` positions are in) and its aspect ratio; the shell
 /// itself always spans the full width of its container.
-#let live-demo(id: none, script: none, width: 680, height: 170, caption: none) = {
+#let live-demo(
+  id: none,
+  script: none,
+  width: 680,
+  height: 170,
+  caption: none,
+) = {
   html.div(class: "my-4")[
-    #player-block(id: id, script: script, width: width, height: height, caption: caption)
+    #player-block(
+      id: id,
+      script: script,
+      width: width,
+      height: height,
+      caption: caption,
+    )
   ]
 }
 
@@ -229,12 +249,24 @@
     if full-end > t.end {
       html.div(
         class: "absolute inset-y-0 rounded border border-dashed opacity-60",
-        style: "left: " + str(start-pct) + "%; width: " + str(pct(full-end) - start-pct) + "%; border-color: " + t.color + ";",
+        style: "left: "
+          + str(start-pct)
+          + "%; width: "
+          + str(pct(full-end) - start-pct)
+          + "%; border-color: "
+          + t.color
+          + ";",
       )[]
     }
     html.div(
       class: "absolute inset-y-0 rounded flex items-center justify-center text-[10px] font-semibold overflow-hidden whitespace-nowrap",
-      style: "left: " + str(start-pct) + "%; width: " + str(end-pct - start-pct) + "%; background: " + t.color + "; color: #1e1e1e;",
+      style: "left: "
+        + str(start-pct)
+        + "%; width: "
+        + str(end-pct - start-pct)
+        + "%; background: "
+        + t.color
+        + "; color: #1e1e1e;",
     )[#t.label]
   }
 ]
@@ -252,8 +284,16 @@
 ) = {
   html.div(class: "my-4 flex flex-col md:flex-row gap-4 md:items-start")[
     #html.div(class: "flex-1 min-w-0")[
-      #player-block(id: id, script: script, width: width, height: height, caption: caption)
+      #player-block(
+        id: id,
+        script: script,
+        width: width,
+        height: height,
+        caption: caption,
+      )
     ]
-    #html.div(class: "w-full md:w-56 shrink-0 border border-text/10 rounded-lg p-2 bg-surface")[#diagram]
+    #html.div(
+      class: "w-full md:w-56 shrink-0 border border-text/10 rounded-lg p-2 bg-surface",
+    )[#diagram]
   ]
 }

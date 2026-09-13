@@ -30,7 +30,10 @@
     #for item in it.children { html.li[#item.body] }
   ]
 
-  show raw.where(block: false): it => html.code(class: cls("font-semibold", colors.code))[#it.text]
+  show raw.where(block: false): it => html.code(class: cls(
+    "font-semibold",
+    colors.code,
+  ))[#it.text]
 
   // The theme (see /js/syntax-highlight.js) sets the block's own
   // background; this wrapper is just for margin and the border.
@@ -38,7 +41,10 @@
     class: "my-2 border border-text/10 rounded-lg",
   )[#it]
 
-  show quote: it => html.blockquote(class: cls("border-l-4 border-accent pl-4 my-4 italic", colors.muted))[#it.body]
+  show quote: it => html.blockquote(class: cls(
+    "border-l-4 border-accent pl-4 my-4 italic",
+    colors.muted,
+  ))[#it.body]
   show link: it => html.a(
     class: cls("underline underline-offset-4", "hover:" + colors.accent),
     href: repr(it.dest).replace("\"", ""),
@@ -81,9 +87,17 @@
     gap: "gap-3",
     links: (
       (label: [Docs], href: "/docs", match: "/docs"),
-      (label: github-badge, href: "https://github.com/voxell-tech/motiongfx", external: true),
+      (
+        label: github-badge,
+        href: "https://github.com/voxell-tech/motiongfx",
+        external: true,
+      ),
       (label: discord-badge, href: links.discord, external: true),
-      (label: nav-icon("voxell.svg", "Voxell"), href: links.website, external: true),
+      (
+        label: nav-icon("voxell.svg", "Voxell"),
+        href: links.website,
+        external: true,
+      ),
     ),
   )
 

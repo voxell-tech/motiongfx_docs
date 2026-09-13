@@ -53,10 +53,33 @@
   class: "docs-nav inline-block text-sm md:block md:fixed md:top-24 md:left-0 md:w-56 md:h-[calc(100vh-6rem)] md:overflow-y-auto md:px-4",
 ))[
   #html.elem("summary", attrs: (class: "docs-nav-toggle"))[
-    #html.elem("svg", attrs: (width: "20", height: "20", viewBox: "0 0 16 16", fill: "currentColor"))[
-      #html.elem("rect", attrs: (x: "1", y: "3", width: "14", height: "2", rx: "1"))[]
-      #html.elem("rect", attrs: (x: "1", y: "7", width: "14", height: "2", rx: "1"))[]
-      #html.elem("rect", attrs: (x: "1", y: "11", width: "14", height: "2", rx: "1"))[]
+    #html.elem("svg", attrs: (
+      width: "20",
+      height: "20",
+      viewBox: "0 0 16 16",
+      fill: "currentColor",
+    ))[
+      #html.elem("rect", attrs: (
+        x: "1",
+        y: "3",
+        width: "14",
+        height: "2",
+        rx: "1",
+      ))[]
+      #html.elem("rect", attrs: (
+        x: "1",
+        y: "7",
+        width: "14",
+        height: "2",
+        rx: "1",
+      ))[]
+      #html.elem("rect", attrs: (
+        x: "1",
+        y: "11",
+        width: "14",
+        height: "2",
+        rx: "1",
+      ))[]
     ]
     #html.span(class: "sr-only")[Chapters]
   ]
@@ -64,8 +87,13 @@
   #html.div(class: "docs-nav-body")[
     #html.elem("button", attrs: (type: "button", class: "docs-nav-close"))[
       #html.elem("svg", attrs: (
-        width: "14", height: "14", viewBox: "0 0 16 16",
-        fill: "none", stroke: "currentColor", stroke-width: "2", stroke-linecap: "round",
+        width: "14",
+        height: "14",
+        viewBox: "0 0 16 16",
+        fill: "none",
+        stroke: "currentColor",
+        stroke-width: "2",
+        stroke-linecap: "round",
       ))[
         #html.elem("line", attrs: (x1: "2", y1: "2", x2: "14", y2: "14"))[]
         #html.elem("line", attrs: (x1: "14", y1: "2", x2: "2", y2: "14"))[]
@@ -100,11 +128,15 @@
 /// width alone. Called automatically by `templates/docs.typ`, so
 /// individual pages don't hand-write their own "== Next" section.
 #let page-nav() = {
-  let idx = flat-items.position(item => norm(item.href) == norm(current-permalink))
+  let idx = flat-items.position(item => (
+    norm(item.href) == norm(current-permalink)
+  ))
   if idx == none { return none }
 
   let prev = if idx > 0 { flat-items.at(idx - 1) } else { none }
-  let next = if idx + 1 < flat-items.len() { flat-items.at(idx + 1) } else { none }
+  let next = if idx + 1 < flat-items.len() { flat-items.at(idx + 1) } else {
+    none
+  }
   if prev == none and next == none { return none }
 
   let card(label, item, href, align-end: false) = html.a(

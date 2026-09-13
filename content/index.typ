@@ -13,12 +13,8 @@
 // pluggable, not built yet. Tradeoff: colors are baked into the SVG at
 // build time, so this one diagram won't follow the light/dark toggle
 // the rest of the page does; picked tones that read on both.
-#let backend-diagram = box(
-  fill: rgb("#1e1e1e"),
-  stroke: 1pt + rgb("#3a3a3a"),
-  radius: 12pt,
-  inset: 20pt,
-)[
+#let backend-diagram = box(inset: 20pt)[
+  #set text(font: "Inter")
   #canvas(length: 1cm, {
     import draw: *
 
@@ -31,7 +27,11 @@
 
     let piece(label, dashed: false) = box(
       radius: 8pt,
-      stroke: (paint: if dashed { dim } else { muted }, thickness: 1.5pt, dash: if dashed { "dashed" } else { none }),
+      stroke: (
+        paint: if dashed { dim } else { muted },
+        thickness: 1.5pt,
+        dash: if dashed { "dashed" } else { none },
+      ),
       inset: (x: 12pt, y: 8pt),
     )[#text(fill: muted-text, size: 10pt)[#label]]
 
@@ -47,9 +47,22 @@
     content((0.0, -2.2), name: "custom")[#piece("Your Renderer", dashed: true)]
     content((3.0, -2.2), name: "more")[#piece("...", dashed: true)]
 
-    line("core.south", "bevy.north", stroke: 1.5pt + accent, mark: (end: ">", fill: accent))
-    line("core.south", "custom.north", stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"), mark: (end: ">", fill: dim))
-    line("core.south", "more.north", stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"), mark: (end: ">", fill: dim))
+    line("core.south", "bevy.north", stroke: 1.5pt + accent, mark: (
+      end: ">",
+      fill: accent,
+    ))
+    line(
+      "core.south",
+      "custom.north",
+      stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"),
+      mark: (end: ">", fill: dim),
+    )
+    line(
+      "core.south",
+      "more.north",
+      stroke: (paint: dim, thickness: 1.5pt, dash: "dashed"),
+      mark: (end: ">", fill: dim),
+    )
   })
 ]
 
@@ -74,7 +87,10 @@
       target: "_blank",
       rel: ("noopener", "noreferrer"),
     )[
-      #html.elem("span", attrs: (class: "social-icon", style: "--icon: url('/icons/github.svg'); background-color: currentColor;"))
+      #html.elem("span", attrs: (
+        class: "social-icon",
+        style: "--icon: url('/icons/github.svg'); background-color: currentColor;",
+      ))
       View on GitHub ↗
     ]
   ]
@@ -92,7 +108,7 @@
     ```rust
     let deltas = [Vec2::new(180.0, 50.0), Vec2::new(180.0, -100.0), Vec2::new(180.0, 50.0)];
     let tracks = deltas.map(|delta| b.act(dot, path!(<Circle>::position), |p| p + delta)
-        .play(s(0.5)));
+        .play(cs(50)));
 
     tracks.ord_chain()
     ```
@@ -178,7 +194,11 @@
 #html.section(class: "py-12 px-4 sm:px-6")[
   #html.div(class: "flex flex-col md:flex-row items-center gap-8")[
     #html.div(class: "flex-1 flex justify-center")[
-      #html.elem("img", attrs: (src: "/icons/bevy.svg", alt: "Bevy", style: "height: 120px; width: auto;"))
+      #html.elem("img", attrs: (
+        src: "/icons/bevy.svg",
+        alt: "Bevy",
+        style: "height: 120px; width: auto;",
+      ))
     ]
     #html.div(class: "flex-1 text-center md:text-left")[
       #html.h2(class: "text-3xl font-bold mb-2")[Start With Bevy]
