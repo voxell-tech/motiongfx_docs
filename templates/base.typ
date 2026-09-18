@@ -84,7 +84,7 @@
   // or Discord's logos are.
   let sponsor-button = html.span(
     class: "px-2.5 py-1 rounded-md border-2 border-orange/40 text-orange text-sm font-medium hover:bg-orange/10 transition-colors",
-  )[♥ Donate]
+  )[#html.span(class: "text-red")[♥] Donate]
 
   // Mask-tinted icon, same technique the shared footer's social links use
   // (see shared/components/social.typ and .social-icon in styles.css):
