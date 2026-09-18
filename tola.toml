@@ -41,6 +41,7 @@ nested = [
   "assets/fonts",
   "assets/js",
   "assets/wasm",
+  "assets/images",
   "shared/icons",
   "shared/scripts"
 ]
