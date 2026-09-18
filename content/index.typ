@@ -76,7 +76,7 @@
   #html.a(
     class: "inline-block mb-4 px-3 py-1 rounded-full border border-text/15 text-muted text-sm hover:border-accent/50 hover:text-accent transition-colors",
     href: "#moxie",
-  )[✨ New: Moxie, a visual editor for MotionGfx →]
+  )[✨ New: Moxie, a visual editor for MotionGfx ↓]
   #html.h1(class: "text-6xl sm:text-7xl font-bold mb-4 tracking-tight")[
     Motion#html.span(class: "text-accent")[Gfx]
   ]
