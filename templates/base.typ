@@ -83,7 +83,7 @@
   // since "sponsor" isn't self-explanatory as a glyph the way GitHub's
   // or Discord's logos are.
   let sponsor-button = html.span(
-    class: "px-2.5 py-1 rounded-md border-2 border-red/40 text-red text-sm font-medium hover:bg-red/10 transition-colors",
+    class: "px-2.5 py-1 rounded-md border-2 border-red/40 bg-red text-white text-sm font-medium hover:opacity-90 transition-opacity",
   )[♥ Donate]
 
   // Mask-tinted icon, same technique the shared footer's social links use
