@@ -8,7 +8,7 @@
 `.play(duration)` only times one action. To combine several, wrap them in
 one of these five combinators before calling `.compile()`.
 
-== chain
+== Chain
 
 Run fragments one after another.
 
@@ -30,7 +30,7 @@ Run fragments one after another.
   ],
 )
 
-== all
+== All
 
 Run fragments together. Finishes when the slowest one does.
 
@@ -62,7 +62,7 @@ The square waits for the slower circle before it starts.
   ],
 )
 
-== any
+== Any
 
 Run fragments together. Finishes as soon as the fastest one does.
 
@@ -95,7 +95,7 @@ The square starts as soon as the faster circle arrives, compare that to
   ],
 )
 
-== flow
+== Flow
 
 Like `chain`, but each fragment starts a fixed delay after the previous one
 starts, not after it finishes.
@@ -127,7 +127,7 @@ circles.iter().map(|c| c.play(cs(60))).ord_flow(cs(15))
   ],
 )
 
-== delay
+== Delay
 
 Push a single fragment's start later.
 
