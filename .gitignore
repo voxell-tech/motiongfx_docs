@@ -7,3 +7,8 @@ content/.tola
 /js_motiongfx/pkg
 /js_motiongfx/pkg-*
 /js_motiongfx/js/node_modules
+
+# Agent skills (e.g. `npx skills add`), local tooling, not site content.
+/.agents
+/.claude
+/skills-lock.json
