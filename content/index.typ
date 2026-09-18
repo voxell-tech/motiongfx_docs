@@ -73,6 +73,10 @@
 
 // Hero
 #html.div(class: "text-center py-20 px-5")[
+  #html.a(
+    class: "inline-block mb-4 px-3 py-1 rounded-full border border-text/15 text-muted text-sm hover:border-accent/50 hover:text-accent transition-colors",
+    href: "#moxie",
+  )[✨ New: Moxie, a visual editor for MotionGfx →]
   #html.h1(class: "text-6xl sm:text-7xl font-bold mb-4 tracking-tight")[
     Motion#html.span(class: "text-accent")[Gfx]
   ]
@@ -197,36 +201,37 @@
 #layout.hr
 
 // Feature: visual editor
-#html.section(class: "py-12 px-4 sm:px-6")[
-  #html.div(class: "flex flex-col md:flex-row items-center gap-8")[
-    #html.div(class: "flex-1 text-center md:text-left")[
-      #html.h2(class: "text-3xl font-bold mb-2")[Prefer a Timeline You Can See?]
-      #html.p(class: "text-muted text-lg")[
-        #html.a(
-          class: "font-semibold hover:text-accent transition-colors",
-          href: "https://github.com/voxell-tech/moxie",
-          target: "_blank",
-          rel: ("noopener", "noreferrer"),
-        )[Moxie]
-        is a Bevy editor for MotionGfx: hierarchy, inspector, and a
-        scrubbable timeline built on the same chain/all/flow
-        combinators these docs cover, no code required to arrange them.
-      ]
+// Full-width below the text, not squeezed into a half-width column
+// beside it like the other feature sections: the screenshot's own UI
+// labels need real width to read at all.
+#html.section(id: "moxie", class: "py-12 px-4 sm:px-6")[
+  #html.div(class: "text-center max-w-2xl mx-auto mb-8")[
+    #html.h2(class: "text-3xl font-bold mb-2")[Prefer a Timeline You Can See?]
+    #html.p(class: "text-muted text-lg")[
       #html.a(
-        class: "inline-block mt-4 px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold hover:border-accent/50 hover:text-accent transition-colors",
+        class: "font-semibold hover:text-accent transition-colors",
         href: "https://github.com/voxell-tech/moxie",
         target: "_blank",
         rel: ("noopener", "noreferrer"),
-      )[Check Out Moxie ↗]
+      )[Moxie]
+      is a Bevy editor for MotionGfx: hierarchy, inspector, and a
+      scrubbable timeline built on the same chain/all/flow combinators
+      these docs cover, no code required to arrange them.
     ]
-    #html.div(class: "flex-1")[
-      #html.elem("img", attrs: (
-        src: "/images/moxie-screenshot.webp",
-        alt: "Moxie, a Bevy editor for MotionGfx, showing its hierarchy, viewport, inspector, and timeline panels",
-        class: "rounded-lg",
-        style: "width: 100%; height: auto;",
-      ))
-    ]
+    #html.a(
+      class: "inline-block mt-4 px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold hover:border-accent/50 hover:text-accent transition-colors",
+      href: "https://github.com/voxell-tech/moxie",
+      target: "_blank",
+      rel: ("noopener", "noreferrer"),
+    )[Check Out Moxie ↗]
+  ]
+  #html.div(class: "max-w-5xl mx-auto")[
+    #html.elem("img", attrs: (
+      src: "/images/moxie-screenshot.webp",
+      alt: "Moxie, a Bevy editor for MotionGfx, showing its hierarchy, viewport, inspector, and timeline panels",
+      class: "rounded-lg",
+      style: "width: 100%; height: auto;",
+    ))
   ]
 ]
 
