@@ -225,7 +225,7 @@
       rel: ("noopener", "noreferrer"),
     )[Check Out Moxie ↗]
   ]
-  #html.div(class: "max-w-5xl mx-auto")[
+  #html.div[
     #html.elem("img", attrs: (
       src: "/images/moxie-screenshot.webp",
       alt: "Moxie, a Bevy editor for MotionGfx, showing its hierarchy, viewport, inspector, and timeline panels",
