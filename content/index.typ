@@ -81,8 +81,11 @@
     Motion#html.span(class: "text-accent")[Gfx]
   ]
 
-  #html.p(class: "text-muted text-xl mb-8 max-w-2xl mx-auto")[
-    A *backend-agnostic* motion graphics framework for *procedural* animation.
+  #html.p(class: "text-muted text-xl mb-2 max-w-2xl mx-auto")[
+    A *backend agnostic* motion graphics creation framework.
+  ]
+  #html.p(class: "text-muted text-lg mb-8 max-w-2xl mx-auto")[
+    Free and open-source forever!
   ]
 
   #html.div(class: "flex flex-wrap justify-center gap-3")[
