@@ -108,7 +108,10 @@
       (label: discord-badge, href: links.discord, external: true),
       (
         label: sponsor-button,
-        href: links.opencollective,
+        // MotionGfx's own OpenCollective project, not the umbrella
+        // Voxell page (links.opencollective): donations here go
+        // specifically toward this project, not Voxell as a whole.
+        href: "https://opencollective.com/voxell/projects/motiongfx",
         external: true,
       ),
       (
