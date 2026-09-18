@@ -39,8 +39,21 @@ document.addEventListener("tola:navigate", openOnDesktop);
 // working after Tola morphs in a new page's (new) drawer instance.
 // Harmless on desktop too: `tola:navigate` re-opens it right after via
 // `openOnDesktop` above.
+function stripTrailingSlash(path) {
+  return path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
+}
+
 document.addEventListener("click", (event) => {
   const closer = event.target.closest(".docs-nav-close, .docs-nav-backdrop, .docs-nav-body a");
   if (!closer) return;
+
+  // A link to the page already open doesn't navigate (Tola's router has
+  // nowhere to go), so `tola:navigate` never fires afterward to reopen
+  // the drawer; closing it here would leave it stuck shut with no event
+  // left to undo that. Leave it alone instead.
+  if (closer.tagName === "A" && stripTrailingSlash(closer.pathname) === stripTrailingSlash(location.pathname)) {
+    return;
+  }
+
   closer.closest(".docs-nav")?.removeAttribute("open");
 });
