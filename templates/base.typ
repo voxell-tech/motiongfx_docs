@@ -78,6 +78,14 @@
     style: "display: inline-block; vertical-align: middle;",
   ))
 
+  // A CTA, not a stat like the two badges above, so it gets its own
+  // small pill instead of shields.io styling: text, not just an icon,
+  // since "sponsor" isn't self-explanatory as a glyph the way GitHub's
+  // or Discord's logos are.
+  let sponsor-button = html.span(
+    class: "px-2.5 py-1 rounded-md border border-accent/40 text-accent text-sm font-medium hover:bg-accent/10 transition-colors",
+  )[♥ Sponsor]
+
   // Mask-tinted icon, same technique the shared footer's social links use
   // (see shared/components/social.typ and .social-icon in styles.css):
   // it recolors via `background-color` instead of baking in a fixed
@@ -98,6 +106,11 @@
         external: true,
       ),
       (label: discord-badge, href: links.discord, external: true),
+      (
+        label: sponsor-button,
+        href: links.opencollective,
+        external: true,
+      ),
       (
         label: nav-icon("voxell.svg", "Voxell"),
         href: links.website,
