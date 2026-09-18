@@ -1,5 +1,105 @@
 /* @ts-self-types="./js_motiongfx.d.ts" */
 
+export class BarsDemo {
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        BarsDemoFinalization.unregister(this);
+        return ptr;
+    }
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_barsdemo_free(ptr, 0);
+    }
+    /**
+     * @returns {number}
+     */
+    get count() {
+        const ret = wasm.barsdemo_count(this.__wbg_ptr);
+        return ret >>> 0;
+    }
+    /**
+     * @returns {number}
+     */
+    get duration() {
+        const ret = wasm.barsdemo_duration(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * Every bar's current height, in the same order as `count`.
+     * @returns {Float64Array}
+     */
+    heights() {
+        const ret = wasm.barsdemo_heights(this.__wbg_ptr);
+        var v1 = getArrayF64FromWasm0(ret[0], ret[1]).slice();
+        wasm.__wbindgen_free(ret[0], ret[1] * 8, 8);
+        return v1;
+    }
+    constructor() {
+        const ret = wasm.barsdemo_new();
+        this.__wbg_ptr = ret;
+        BarsDemoFinalization.register(this, this.__wbg_ptr, this);
+        return this;
+    }
+    /**
+     * @param {number} seconds
+     */
+    sampleAt(seconds) {
+        wasm.barsdemo_sampleAt(this.__wbg_ptr, seconds);
+    }
+    /**
+     * Every bar's current center y, in the same order as `count`.
+     * @returns {Float64Array}
+     */
+    ys() {
+        const ret = wasm.barsdemo_ys(this.__wbg_ptr);
+        var v1 = getArrayF64FromWasm0(ret[0], ret[1]).slice();
+        wasm.__wbindgen_free(ret[0], ret[1] * 8, 8);
+        return v1;
+    }
+}
+if (Symbol.dispose) BarsDemo.prototype[Symbol.dispose] = BarsDemo.prototype.free;
+
+export class BounceDemo {
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        BounceDemoFinalization.unregister(this);
+        return ptr;
+    }
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_bouncedemo_free(ptr, 0);
+    }
+    /**
+     * @returns {number}
+     */
+    get duration() {
+        const ret = wasm.bouncedemo_duration(this.__wbg_ptr);
+        return ret;
+    }
+    constructor() {
+        const ret = wasm.bouncedemo_new();
+        this.__wbg_ptr = ret;
+        BounceDemoFinalization.register(this, this.__wbg_ptr, this);
+        return this;
+    }
+    /**
+     * @param {number} seconds
+     */
+    sampleAt(seconds) {
+        wasm.bouncedemo_sampleAt(this.__wbg_ptr, seconds);
+    }
+    /**
+     * @returns {number}
+     */
+    get y() {
+        const ret = wasm.bouncedemo_y(this.__wbg_ptr);
+        return ret;
+    }
+}
+if (Symbol.dispose) BounceDemo.prototype[Symbol.dispose] = BounceDemo.prototype.free;
+
 /**
  * Easing curve, matching `motiongfx::prelude::ease`.
  * @enum {0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27}
@@ -65,6 +165,53 @@ export class Fragment {
     }
 }
 if (Symbol.dispose) Fragment.prototype[Symbol.dispose] = Fragment.prototype.free;
+
+export class RelativeDemo {
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        RelativeDemoFinalization.unregister(this);
+        return ptr;
+    }
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_relativedemo_free(ptr, 0);
+    }
+    /**
+     * @returns {number}
+     */
+    get duration() {
+        const ret = wasm.relativedemo_duration(this.__wbg_ptr);
+        return ret;
+    }
+    constructor() {
+        const ret = wasm.relativedemo_new();
+        this.__wbg_ptr = ret;
+        RelativeDemoFinalization.register(this, this.__wbg_ptr, this);
+        return this;
+    }
+    /**
+     * @param {number} seconds
+     */
+    sampleAt(seconds) {
+        wasm.relativedemo_sampleAt(this.__wbg_ptr, seconds);
+    }
+    /**
+     * @returns {number}
+     */
+    get x() {
+        const ret = wasm.relativedemo_x(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * @returns {number}
+     */
+    get y() {
+        const ret = wasm.relativedemo_y(this.__wbg_ptr);
+        return ret;
+    }
+}
+if (Symbol.dispose) RelativeDemo.prototype[Symbol.dispose] = RelativeDemo.prototype.free;
 
 /**
  * A scope for signals and the timeline compiled from them. Create
@@ -273,9 +420,18 @@ function __wbg_get_imports() {
     };
 }
 
+const BarsDemoFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_barsdemo_free(ptr, 1));
+const BounceDemoFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_bouncedemo_free(ptr, 1));
 const FragmentFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
     : new FinalizationRegistry(ptr => wasm.__wbg_fragment_free(ptr, 1));
+const RelativeDemoFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_relativedemo_free(ptr, 1));
 const RuntimeFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
     : new FinalizationRegistry(ptr => wasm.__wbg_runtime_free(ptr, 1));
@@ -292,12 +448,25 @@ function _assertClass(instance, klass) {
     }
 }
 
+function getArrayF64FromWasm0(ptr, len) {
+    ptr = ptr >>> 0;
+    return getFloat64ArrayMemory0().subarray(ptr / 8, ptr / 8 + len);
+}
+
 let cachedDataViewMemory0 = null;
 function getDataViewMemory0() {
     if (cachedDataViewMemory0 === null || cachedDataViewMemory0.buffer.detached === true || (cachedDataViewMemory0.buffer.detached === undefined && cachedDataViewMemory0.buffer !== wasm.memory.buffer)) {
         cachedDataViewMemory0 = new DataView(wasm.memory.buffer);
     }
     return cachedDataViewMemory0;
+}
+
+let cachedFloat64ArrayMemory0 = null;
+function getFloat64ArrayMemory0() {
+    if (cachedFloat64ArrayMemory0 === null || cachedFloat64ArrayMemory0.byteLength === 0) {
+        cachedFloat64ArrayMemory0 = new Float64Array(wasm.memory.buffer);
+    }
+    return cachedFloat64ArrayMemory0;
 }
 
 function getStringFromWasm0(ptr, len) {
@@ -413,6 +582,7 @@ function __wbg_finalize_init(instance, module) {
     wasm = instance.exports;
     wasmModule = module;
     cachedDataViewMemory0 = null;
+    cachedFloat64ArrayMemory0 = null;
     cachedUint8ArrayMemory0 = null;
     wasm.__wbindgen_start();
     return wasm;

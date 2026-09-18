@@ -84,6 +84,43 @@
   ]
 ]
 
+/// Reads a Rust source file and pulls out the region between a
+/// `// snippet:start` and a `// snippet:end` comment, dedented to that
+/// region's own smallest indent. Used so a demo's code block is the
+/// literal source that got compiled into the page's wasm, not a
+/// hand-copied paraphrase of it that can quietly drift out of sync;
+/// see js_motiongfx/src/demos/relative.rs for the marker convention.
+#let rust-snippet(path) = {
+  let source = read(path)
+  let start-marker = "// snippet:start"
+  let end-marker = "// snippet:end"
+  let start = source.position(start-marker)
+  let end = source.position(end-marker)
+  assert(
+    start != none and end != none,
+    message: "rust-snippet: couldn't find " + start-marker + "/" + end-marker + " in " + path,
+  )
+
+  let lines = source.slice(start + start-marker.len(), end).split("\n")
+  if lines.len() > 0 and lines.first().trim() == "" { lines = lines.slice(1) }
+  if lines.len() > 0 and lines.last().trim() == "" { lines = lines.slice(0, -1) }
+
+  let leading-spaces(line) = {
+    let n = 0
+    for c in line.codepoints() {
+      if c != " " { break }
+      n += 1
+    }
+    n
+  }
+
+  let indents = lines.filter(l => l.trim() != "").map(leading-spaces)
+  let min-indent = if indents.len() > 0 { calc.min(..indents) } else { 0 }
+  let dedented = lines.map(l => if l.len() >= min-indent { l.slice(min-indent) } else { l })
+
+  raw(dedented.join("\n"), lang: "rust", block: true)
+}
+
 /// Side-by-side showcase card: source code + rendered output. Two
 /// columns from md: up (stacked below that, where there's no room to
 /// put them side by side); pass `reverse: true` to swap which side the

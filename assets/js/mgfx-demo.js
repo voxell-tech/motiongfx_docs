@@ -14,14 +14,17 @@ import init, {
   act,
   all,
   any,
+  BarsDemo,
+  BounceDemo,
   chain,
   delay,
   Ease,
   flow,
+  RelativeDemo,
   Runtime,
 } from "/wasm/js_motiongfx.js";
 
-export { act, all, any, chain, delay, Ease, flow, Runtime };
+export { act, all, any, BarsDemo, BounceDemo, chain, delay, Ease, flow, RelativeDemo, Runtime };
 
 /** The `js/runtime.ts` signal wrapper, inlined: the site has no TS build step. */
 export function signal(runtime, name, initial) {
@@ -141,7 +144,7 @@ function createControls(canvas, duration) {
 // play as a 1s one, matching what the timing diagrams beside them show.
 const PERIOD_MS_PER_SECOND = 1700;
 
-function mountOne(canvas, { build, draw, periodMs }) {
+function mountOne(canvas, { build, demo, draw, periodMs }) {
   if (canvas.dataset.mgfxMounted) return;
   canvas.dataset.mgfxMounted = "true";
 
@@ -149,8 +152,17 @@ function mountOne(canvas, { build, draw, periodMs }) {
 
   loadWasm()
     .then(() => {
-      const mgfx = new Runtime();
-      mgfx.compile(build(mgfx));
+      // Two ways to get a sampleable object: `demo` is one of
+      // js_motiongfx's own scene structs (see js_motiongfx/src/demos/),
+      // whose Rust source is also what the page shows as the code
+      // snippet, real motiongfx code, not a JS reimplementation of it.
+      // `build` is the older, lower-level escape hatch: it authors the
+      // scene in JS against the generic act/all/chain/... primitives
+      // (still real wasm calls, just not tied to one Rust source file),
+      // used by the combinator docs pages where there's no single
+      // canonical snippet to stay in sync with.
+      const mgfx = demo ? new demo() : new Runtime();
+      if (build) mgfx.compile(build(mgfx));
       const duration = mgfx.duration;
       periodMs ??= Math.max(duration * PERIOD_MS_PER_SECOND, 400);
 

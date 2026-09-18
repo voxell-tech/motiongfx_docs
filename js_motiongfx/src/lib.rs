@@ -20,6 +20,15 @@ use send_wrapper::SendWrapper;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
 
+/// Landing-page demos: each is a small self-contained scene written in
+/// real motiongfx Rust and compiled straight into this crate, not
+/// authored through the generic `act`/`chain`/... JS-facing API below.
+/// The docs site reads each demo's own source file to show the
+/// matching snippet, so page and code can't drift apart. See
+/// `demos/relative.rs` for the pattern.
+mod demos;
+pub use demos::{BarsDemo, BounceDemo, RelativeDemo};
+
 /// A subject's id inside a [`JsWorld`].
 type Id = u32;
 

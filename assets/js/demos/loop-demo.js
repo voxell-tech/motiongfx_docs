@@ -1,38 +1,23 @@
-// "It's Just Code": ordinary loops and variables build the whole scene,
-// a bar chart, one `.map()` over each bar's position and target
-// height, one shared stagger variable, no special timeline UI to
-// hand-place anything in.
-import { Ease, all, flow, mountDemo } from "/js/mgfx-demo.js";
-import { Rect, World } from "/js/shapes.js";
+// "It's Just Code": the bar chart's data and the loop over it both live
+// in Rust (see js_motiongfx/src/demos/bars.rs, the same source the docs
+// page reads its snippet from). This file only reads each bar's sampled
+// height/y back and draws it; x is pure layout, not something that
+// animates, so it stays a plain JS computation from `count`.
+import { BarsDemo, mountDemo } from "/js/mgfx-demo.js";
 
-let world;
-
-// The "data": how tall each bar grows to. Ordinary numbers, no special
-// authoring tool needed to place them.
-const HEIGHTS = [60, 110, 40, 130, 80, 150, 100, 55, 120, 70];
-const BASELINE = 160;
+const BAR_WIDTH = 32;
 
 mountDemo("#loop-demo", {
-  build: (mgfx) => {
-    world = new World();
-    const count = HEIGHTS.length;
+  demo: BarsDemo,
+  draw: (ctx, bars) => {
+    const heights = bars.heights();
+    const ys = bars.ys();
+    const count = bars.count;
 
-    const bars = HEIGHTS.map((height, i) => {
+    ctx.fillStyle = "#78dce8";
+    for (let i = 0; i < count; i++) {
       const x = 40 + (600 / (count - 1)) * i;
-      const bar = new Rect(mgfx, `bar${i}`, { x, y: BASELINE, width: 32, height: 6, fill: "#78dce8" });
-      world.add(bar);
-      return { bar, height };
-    });
-
-    return flow(
-      0.06, // the "variable": stagger between each bar's start
-      bars.map(({ bar, height }) =>
-        all([
-          bar.height(height, 0.6, Ease.CubicInOut),
-          bar.y(BASELINE - height / 2, 0.6, Ease.CubicInOut),
-        ]),
-      ),
-    );
+      ctx.fillRect(x - BAR_WIDTH / 2, ys[i] - heights[i] / 2, BAR_WIDTH, heights[i]);
+    }
   },
-  draw: (ctx) => world.draw(ctx),
 });

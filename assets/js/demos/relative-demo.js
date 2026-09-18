@@ -1,38 +1,17 @@
-// "Relative, Not Absolute": a `Vec2` signal moves diagonally, three
-// times, each in a different direction (a zigzag, not one straight
-// line), with each step reading the current position and building on
-// it, not jumping to three fixed, hand-picked spots.
-import { Ease, chain, mountDemo, vec2Signal } from "/js/mgfx-demo.js";
-import { World } from "/js/shapes.js";
+// "Relative, Not Absolute": the dot's path is entirely computed in Rust
+// (see js_motiongfx/src/demos/relative.rs, the same source the docs page
+// reads its code snippet from); this file only reads the sampled
+// position back and draws it.
+import { mountDemo, RelativeDemo } from "/js/mgfx-demo.js";
 
-const STEPS = [
-  { dx: 180, dy: 50 },
-  { dx: 180, dy: -100 },
-  { dx: 180, dy: 50 },
-];
-
-let world;
+const RADIUS = 16;
 
 mountDemo("#relative-demo", {
-  build: (mgfx) => {
-    world = new World();
-
-    const pos = vec2Signal(mgfx, "dot", { x: 60, y: 85 });
-    const radius = 16;
-    world.add({
-      draw(ctx) {
-        ctx.beginPath();
-        ctx.arc(pos.x(), pos.y(), radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#78dce8";
-        ctx.fill();
-      },
-    });
-
-    let x = 60;
-    let y = 85;
-    return chain(
-      STEPS.map(({ dx, dy }) => pos({ x: x += dx, y: y += dy }, 0.5, Ease.CubicInOut)),
-    );
+  demo: RelativeDemo,
+  draw: (ctx, dot) => {
+    ctx.beginPath();
+    ctx.arc(dot.x, dot.y, RADIUS, 0, Math.PI * 2);
+    ctx.fillStyle = "#78dce8";
+    ctx.fill();
   },
-  draw: (ctx) => world.draw(ctx),
 });

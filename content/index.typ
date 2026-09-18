@@ -109,15 +109,7 @@
   description: "An action's closure receives the field's current value, so each step can build on wherever the last one left off, not jump to a fixed number pulled from nowhere.",
   code-label: "Rust",
   preview-label: "Live Playground",
-  code: [
-    ```rust
-    let deltas = [Vec2::new(180.0, 50.0), Vec2::new(180.0, -100.0), Vec2::new(180.0, 50.0)];
-    let tracks = deltas.map(|delta| b.act(dot, path!(<Circle>::position), |p| p + delta)
-        .play(cs(50)));
-
-    tracks.ord_chain()
-    ```
-  ],
+  code: ui.rust-snippet("/js_motiongfx/src/demos/relative.rs"),
   preview: ui.player-block(
     id: "relative-demo",
     script: "/js/demos/relative-demo.js",
@@ -131,18 +123,7 @@
   description: "No special timeline UI to hand-place anything in: a scene is built with the same loops and variables you already reach for.",
   code-label: "Rust",
   preview-label: "Live Playground",
-  code: [
-    ```rust
-    let stagger = cs(6);
-    let tracks = bars.iter()
-        .zip(heights)
-        .map(|(bar, height)| b.act(*bar, path!(<Bar>::height), |_| height)
-            .play(s(0.6)))
-        .collect::<Vec<_>>();
-
-    tracks.ord_flow(stagger)
-    ```
-  ],
+  code: ui.rust-snippet("/js_motiongfx/src/demos/bars.rs"),
   preview: ui.player-block(
     id: "loop-demo",
     script: "/js/demos/loop-demo.js",
@@ -157,14 +138,7 @@
   description: "Every timeline bakes once, then plays at any speed, in either direction, or jumps straight to a frame. No extra computation, no re-simulation.",
   code-label: "Rust",
   preview-label: "Live Playground",
-  code: [
-    ```rust
-    // Any time, any order: forward, backward, twice at once.
-    timeline.set_target_time(cs(50));
-    timeline.queue_actions();
-    timeline.sample_queued_actions(&registry, &mut world);
-    ```
-  ],
+  code: ui.rust-snippet("/js_motiongfx/src/demos/bounce.rs"),
   preview: ui.player-block(
     id: "bounce-demo",
     script: "/js/demos/bounce-demo.js",
