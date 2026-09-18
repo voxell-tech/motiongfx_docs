@@ -144,7 +144,34 @@ function createControls(canvas, duration) {
 // play as a 1s one, matching what the timing diagrams beside them show.
 const PERIOD_MS_PER_SECOND = 1700;
 
-function mountOne(canvas, { build, demo, draw, periodMs }) {
+const SHAPE_KIND_CIRCLE = 0;
+const SHAPE_KIND_RECT = 1;
+
+/**
+ * The generic renderer for any `demo` object exposing `shapes()` (see
+ * js_motiongfx/src/demos/shape.rs): flat `[kind, x, y, a, b]` tuples,
+ * both kinds anchored at their center, kind 0 a circle (`a` = radius)
+ * and kind 1 a rect (`a` = width, `b` = height). One shape draws the
+ * same way regardless of which demo produced it, so a `demo`-based
+ * mount needs no `draw()` of its own; a demo can still pass one to
+ * override this.
+ */
+function drawShapes(ctx, mgfxDemo) {
+  const shapes = mgfxDemo.shapes();
+  ctx.fillStyle = "#78dce8";
+  for (let i = 0; i < shapes.length; i += 5) {
+    const [kind, x, y, a, b] = shapes.slice(i, i + 5);
+    if (kind === SHAPE_KIND_CIRCLE) {
+      ctx.beginPath();
+      ctx.arc(x, y, a, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (kind === SHAPE_KIND_RECT) {
+      ctx.fillRect(x - a / 2, y - b / 2, a, b);
+    }
+  }
+}
+
+function mountOne(canvas, { build, demo, draw = demo ? drawShapes : undefined, periodMs }) {
   if (canvas.dataset.mgfxMounted) return;
   canvas.dataset.mgfxMounted = "true";
 

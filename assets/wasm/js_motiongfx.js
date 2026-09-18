@@ -14,26 +14,9 @@ export class BarsDemo {
     /**
      * @returns {number}
      */
-    get count() {
-        const ret = wasm.barsdemo_count(this.__wbg_ptr);
-        return ret >>> 0;
-    }
-    /**
-     * @returns {number}
-     */
     get duration() {
         const ret = wasm.barsdemo_duration(this.__wbg_ptr);
         return ret;
-    }
-    /**
-     * Every bar's current height, in the same order as `count`.
-     * @returns {Float64Array}
-     */
-    heights() {
-        const ret = wasm.barsdemo_heights(this.__wbg_ptr);
-        var v1 = getArrayF64FromWasm0(ret[0], ret[1]).slice();
-        wasm.__wbindgen_free(ret[0], ret[1] * 8, 8);
-        return v1;
     }
     constructor() {
         const ret = wasm.barsdemo_new();
@@ -48,11 +31,12 @@ export class BarsDemo {
         wasm.barsdemo_sampleAt(this.__wbg_ptr, seconds);
     }
     /**
-     * Every bar's current center y, in the same order as `count`.
+     * Every shape this demo draws, flattened for `mgfx-demo.js`'s
+     * generic renderer; see `shape.rs`.
      * @returns {Float64Array}
      */
-    ys() {
-        const ret = wasm.barsdemo_ys(this.__wbg_ptr);
+    shapes() {
+        const ret = wasm.barsdemo_shapes(this.__wbg_ptr);
         var v1 = getArrayF64FromWasm0(ret[0], ret[1]).slice();
         wasm.__wbindgen_free(ret[0], ret[1] * 8, 8);
         return v1;
@@ -91,11 +75,15 @@ export class BounceDemo {
         wasm.bouncedemo_sampleAt(this.__wbg_ptr, seconds);
     }
     /**
-     * @returns {number}
+     * Every shape this demo draws, flattened for `mgfx-demo.js`'s
+     * generic renderer; see `shape.rs`.
+     * @returns {Float64Array}
      */
-    get y() {
-        const ret = wasm.bouncedemo_y(this.__wbg_ptr);
-        return ret;
+    shapes() {
+        const ret = wasm.bouncedemo_shapes(this.__wbg_ptr);
+        var v1 = getArrayF64FromWasm0(ret[0], ret[1]).slice();
+        wasm.__wbindgen_free(ret[0], ret[1] * 8, 8);
+        return v1;
     }
 }
 if (Symbol.dispose) BounceDemo.prototype[Symbol.dispose] = BounceDemo.prototype.free;
@@ -197,18 +185,16 @@ export class RelativeDemo {
         wasm.relativedemo_sampleAt(this.__wbg_ptr, seconds);
     }
     /**
-     * @returns {number}
+     * Every shape this demo draws, flattened for
+     * `mgfx-demo.js`'s generic renderer; see
+     * `shape.rs`.
+     * @returns {Float64Array}
      */
-    get x() {
-        const ret = wasm.relativedemo_x(this.__wbg_ptr);
-        return ret;
-    }
-    /**
-     * @returns {number}
-     */
-    get y() {
-        const ret = wasm.relativedemo_y(this.__wbg_ptr);
-        return ret;
+    shapes() {
+        const ret = wasm.relativedemo_shapes(this.__wbg_ptr);
+        var v1 = getArrayF64FromWasm0(ret[0], ret[1]).slice();
+        wasm.__wbindgen_free(ret[0], ret[1] * 8, 8);
+        return v1;
     }
 }
 if (Symbol.dispose) RelativeDemo.prototype[Symbol.dispose] = RelativeDemo.prototype.free;

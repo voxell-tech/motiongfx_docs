@@ -7,6 +7,11 @@ use core::time::Duration;
 use motiongfx::prelude::*;
 use wasm_bindgen::prelude::*;
 
+use super::shape::{self, Shape};
+
+const X: f64 = 340.0;
+const RADIUS: f64 = 18.0;
+
 struct Ball {
     y: f64,
 }
@@ -18,7 +23,11 @@ impl SubjectSource<(), Ball> for BallWorld {
         Some(&self.0)
     }
 
-    fn apply_source<R>(&mut self, _id: (), f: impl FnOnce(&mut Ball) -> R) -> Option<R> {
+    fn apply_source<R>(
+        &mut self,
+        _id: (),
+        f: impl FnOnce(&mut Ball) -> R,
+    ) -> Option<R> {
         Some(f(&mut self.0))
     }
 }
@@ -55,7 +64,11 @@ impl BounceDemo {
         let mut timeline = b.compile(track);
         timeline.bake_actions(&registry, &world);
 
-        BounceDemo { registry, world, timeline }
+        BounceDemo {
+            registry,
+            world,
+            timeline,
+        }
     }
 
     #[wasm_bindgen(getter)]
@@ -65,16 +78,22 @@ impl BounceDemo {
 
     #[wasm_bindgen(js_name = sampleAt)]
     pub fn sample_at(&mut self, seconds: f64) {
-        self.timeline
-            .set_target_time(Duration::from_secs_f64(seconds.max(0.0)));
+        self.timeline.set_target_time(Duration::from_secs_f64(
+            seconds.max(0.0),
+        ));
         self.timeline.queue_actions();
         self.timeline
             .sample_queued_actions(&self.registry, &mut self.world);
     }
 
-    #[wasm_bindgen(getter)]
-    pub fn y(&self) -> f64 {
-        self.world.0.y
+    /// Every shape this demo draws, flattened for `mgfx-demo.js`'s
+    /// generic renderer; see `shape.rs`.
+    pub fn shapes(&self) -> Vec<f64> {
+        shape::flatten([Shape::Circle(shape::Circle {
+            x: X,
+            y: self.world.0.y,
+            radius: RADIUS,
+        })])
     }
 }
 

@@ -44,7 +44,11 @@ impl SubjectSource<Id, f64> for JsWorld {
         self.values.get(id as usize)
     }
 
-    fn apply_source<R>(&mut self, id: Id, f: impl FnOnce(&mut f64) -> R) -> Option<R> {
+    fn apply_source<R>(
+        &mut self,
+        id: Id,
+        f: impl FnOnce(&mut f64) -> R,
+    ) -> Option<R> {
         self.values.get_mut(id as usize).map(f)
     }
 }
@@ -150,7 +154,12 @@ fn err(msg: impl core::fmt::Display) -> JsValue {
 /// Describes animating subject `id` to `to` (a target value, or a
 /// function of its current value) over `duration_secs`.
 #[wasm_bindgen]
-pub fn act(id: Id, to: JsValue, duration_secs: f64, ease: Option<Ease>) -> Fragment {
+pub fn act(
+    id: Id,
+    to: JsValue,
+    duration_secs: f64,
+    ease: Option<Ease>,
+) -> Fragment {
     Fragment(FragmentNode::Action {
         id,
         to: SendWrapper::new(to),
@@ -192,7 +201,10 @@ pub fn delay(delay_secs: f64, fragment: Fragment) -> Fragment {
 /// Resolves one [`FragmentNode`] into a real [`TrackFragment`] against
 /// `b`. The only step that touches the builder at all is the `Action`
 /// leaf; every combinator just merges already-resolved fragments.
-fn resolve(b: &mut TimelineBuilder<'_, JsWorld>, node: FragmentNode) -> TrackFragment {
+fn resolve(
+    b: &mut TimelineBuilder<'_, JsWorld>,
+    node: FragmentNode,
+) -> TrackFragment {
     match node {
         FragmentNode::Action {
             id,
@@ -202,10 +214,13 @@ fn resolve(b: &mut TimelineBuilder<'_, JsWorld>, node: FragmentNode) -> TrackFra
         } => {
             let action = move |current: &f64| -> f64 {
                 if let Some(func) = to.dyn_ref::<Function>() {
-                    func.call1(&JsValue::NULL, &JsValue::from_f64(*current))
-                        .ok()
-                        .and_then(|v| v.as_f64())
-                        .unwrap_or(*current)
+                    func.call1(
+                        &JsValue::NULL,
+                        &JsValue::from_f64(*current),
+                    )
+                    .ok()
+                    .and_then(|v| v.as_f64())
+                    .unwrap_or(*current)
                 } else {
                     to.as_f64().unwrap_or(*current)
                 }
@@ -215,11 +230,18 @@ fn resolve(b: &mut TimelineBuilder<'_, JsWorld>, node: FragmentNode) -> TrackFra
                 Some(ease) => interp.with_ease(ease.to_fn()),
                 None => interp,
             };
-            interp.play(Duration::from_secs_f64(duration_secs.max(0.0)))
+            interp
+                .play(Duration::from_secs_f64(duration_secs.max(0.0)))
         }
-        FragmentNode::Chain(children) => track::chain(children.into_iter().map(|c| resolve(b, c))),
-        FragmentNode::All(children) => track::all(children.into_iter().map(|c| resolve(b, c))),
-        FragmentNode::Any(children) => track::any(children.into_iter().map(|c| resolve(b, c))),
+        FragmentNode::Chain(children) => {
+            track::chain(children.into_iter().map(|c| resolve(b, c)))
+        }
+        FragmentNode::All(children) => {
+            track::all(children.into_iter().map(|c| resolve(b, c)))
+        }
+        FragmentNode::Any(children) => {
+            track::any(children.into_iter().map(|c| resolve(b, c)))
+        }
         FragmentNode::Flow(delay_secs, children) => track::flow(
             Duration::from_secs_f64(delay_secs.max(0.0)),
             children.into_iter().map(|c| resolve(b, c)),
@@ -247,8 +269,9 @@ impl TimelineHandle {
 
     /// Moves the playhead and samples.
     fn sample_at(&mut self, seconds: f64) {
-        self.timeline
-            .set_target_time(Duration::from_secs_f64(seconds.max(0.0)));
+        self.timeline.set_target_time(Duration::from_secs_f64(
+            seconds.max(0.0),
+        ));
         self.timeline.queue_actions();
         self.timeline
             .sample_queued_actions(&self.registry, &mut self.world);
@@ -267,7 +290,10 @@ impl TimelineHandle {
 /// [`TimelineHandle`], baking it against `initial`. The one call that
 /// touches a builder; see the module docs for why that has to happen at
 /// once.
-fn resolve_and_bake(initial: Vec<f64>, root: Fragment) -> TimelineHandle {
+fn resolve_and_bake(
+    initial: Vec<f64>,
+    root: Fragment,
+) -> TimelineHandle {
     let world = JsWorld { values: initial };
     let mut registry = Registry::new();
 
@@ -310,7 +336,11 @@ impl Runtime {
 
     /// Registers a named subject with an initial value, returning its id.
     #[wasm_bindgen(js_name = createSignal)]
-    pub fn create_signal(&mut self, name: String, initial: f64) -> Id {
+    pub fn create_signal(
+        &mut self,
+        name: String,
+        initial: f64,
+    ) -> Id {
         let id = self.names.len() as Id;
         self.names.push(name);
         self.initial.push(initial);
@@ -319,7 +349,8 @@ impl Runtime {
 
     /// Resolves, plays, orders, compiles, and bakes a timeline from `root`.
     pub fn compile(&mut self, root: Fragment) {
-        self.timeline = Some(resolve_and_bake(self.initial.clone(), root));
+        self.timeline =
+            Some(resolve_and_bake(self.initial.clone(), root));
     }
 
     /// The compiled track's duration, in seconds.
@@ -333,7 +364,9 @@ impl Runtime {
     pub fn sample_at(&mut self, seconds: f64) -> Result<(), JsValue> {
         self.timeline
             .as_mut()
-            .ok_or_else(|| err("sampleAt: compile() has not been called yet"))?
+            .ok_or_else(|| {
+                err("sampleAt: compile() has not been called yet")
+            })?
             .sample_at(seconds);
         Ok(())
     }
