@@ -5,18 +5,20 @@
 
 = Ordering
 
-`.play(duration)` only times one action. To combine several, wrap them in
-one of these five combinators before calling `.compile()`.
+`.play(duration)` turns one action into a fragment. To combine several
+fragments, order them with one of these five combinators before calling
+`.compile()`. In the snippets below, `a`, `b`, and `c` are actions, not
+the builder.
 
 == Chain
 
 Run fragments one after another.
 
 ```rust
-[frag_a.play(s(1)), frag_b.play(s(1))].ord_chain()
+[a.play(s(1)), b.play(s(1))].ord_chain()
 ```
 
-`frag_b` starts the moment `frag_a` finishes.
+`b` starts the moment `a` finishes.
 
 #ui.live-demo-with-diagram(
   id: "ordering-chain-demo",
@@ -35,10 +37,11 @@ Run fragments one after another.
 Run fragments together. Finishes when the slowest one does.
 
 ```rust
-chain([
-  [frag_a.play(s(1)), frag_b.play(cs(50))].ord_all(),
-  frag_c.play(cs(50)),
-])
+[
+    [a.play(s(1)), b.play(cs(50))].ord_all(),
+    c.play(cs(50)),
+]
+.ord_chain()
 ```
 
 The square waits for the slower circle before it starts.
@@ -67,13 +70,14 @@ The square waits for the slower circle before it starts.
 Run fragments together. Finishes as soon as the fastest one does.
 
 ```rust
-chain([
-  [frag_a.play(s(1)), frag_b.play(cs(50))].ord_any(),
-  frag_c.play(cs(50)),
-])
+[
+    [a.play(s(1)), b.play(cs(50))].ord_any(),
+    c.play(cs(50)),
+]
+.ord_chain()
 ```
 
-The square starts as soon as the faster circle arrives, compare that to
+The square starts as soon as the faster circle arrives. Compare that to
 `all` above.
 
 #ui.live-demo-with-diagram(
@@ -97,11 +101,11 @@ The square starts as soon as the faster circle arrives, compare that to
 
 == Flow
 
-Like `chain`, but each fragment starts a fixed delay after the previous one
-starts, not after it finishes.
+Like `chain`, except each fragment starts a fixed delay after the previous
+one starts, instead of waiting for it to finish.
 
 ```rust
-circles.iter().map(|c| c.play(cs(60))).ord_flow(cs(15))
+actions.map(|a| a.play(cs(60))).ord_flow(cs(15))
 ```
 
 #ui.live-demo-with-diagram(
@@ -134,7 +138,7 @@ Push a single fragment's start later.
 ```rust
 use motiongfx::track::delay;
 
-delay(cs(30), frag_a.play(s(1)))
+delay(cs(30), a.play(s(1)))
 ```
 
 #ui.live-demo-with-diagram(
