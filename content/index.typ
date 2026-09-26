@@ -240,6 +240,11 @@
 
 #layout.hr
 
+// Newsletter: right after Moxie, since the list covers both projects.
+#ui.newsletter()
+
+#layout.hr
+
 // Closing CTA
 #html.div(class: "text-center py-12")[
   #html.h2(class: "text-3xl font-bold mb-4")[Ready to animate?]

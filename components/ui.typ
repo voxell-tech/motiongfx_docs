@@ -4,6 +4,42 @@
 #import "/utils/tola.typ": cls
 #import "/components/layout.typ" as layout
 
+/// Newsletter signup, posting straight to Kit (form 9965001). A plain
+/// `<form>`, not Kit's embed script: that script ships its own light-only
+/// styling, and Tola's SPA navigation never re-runs inserted `<script>`s
+/// anyway. Styled with the site's own tokens, so it follows the theme
+/// toggle. assets/js/newsletter.js upgrades it to submit in place; with
+/// no JS it still works, it just lands on Kit's hosted confirmation page.
+#let newsletter() = html.section(class: "py-12 px-4 sm:px-6")[
+  #html.div(class: "max-w-xl mx-auto text-center")[
+    #html.h2(class: "text-3xl font-bold mb-2")[Stay in the Loop!]
+    #html.p(class: "text-muted text-lg mb-6")[
+      New MotionGfx releases and Moxie updates, straight to your inbox!
+    ]
+    #html.elem("form", attrs: (
+      class: "newsletter-form flex flex-col sm:flex-row gap-2",
+      action: "https://app.kit.com/forms/9965001/subscriptions",
+      method: "post",
+    ))[
+      #html.elem("input", attrs: (
+        type: "email",
+        name: "email_address",
+        required: "",
+        placeholder: "you@example.com",
+        aria-label: "Email address",
+        class: "flex-1 min-w-0 px-4 py-2.5 rounded-lg bg-surface text-text border border-text/15 placeholder:text-muted focus:outline-none focus:border-accent",
+      ))
+      #html.elem("button", attrs: (
+        type: "submit",
+        class: "px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-50",
+      ))[Keep Me Posted!]
+    ]
+    #html.p(class: "newsletter-status text-sm text-muted mt-3")[
+      Only when there's something worth sharing. Unsubscribe anytime.
+    ]
+  ]
+]
+
 /// Navigation link
 #let nav-link(href, label) = html.a(
   class: "text-muted hover:text-accent transition-colors",

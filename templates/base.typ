@@ -133,4 +133,5 @@
   html.elem("script", attrs: (type: "module", src: "/js/syntax-highlight.js"))[]
   html.elem("script", attrs: (type: "module", src: "/js/demo-bootstrap.js"))[]
   html.elem("script", attrs: (type: "module", src: "/js/docs-nav.js"))[]
+  html.elem("script", attrs: (type: "module", src: "/js/newsletter.js"))[]
 }
