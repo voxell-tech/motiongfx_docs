@@ -37,6 +37,11 @@ jobs:
       - name: Build
         run: tola build --clean
 
+      # GitHub Pages serves /404.html for unknown URLs, but Tola emits
+      # every page as <name>/index.html (see content/404.typ).
+      - name: Add 404 page
+        run: cp public/404/index.html public/404.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
