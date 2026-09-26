@@ -10,11 +10,13 @@
       name: "viewport",
       content: "width=device-width, initial-scale=1",
     ))
-    #if m.title != none {
-      html.title(m.title + " | " + info.title)
-    } else {
-      html.title(info.title)
-    }
+    #let full-title = if m.title != none {
+      m.title + " | " + info.title
+    } else { info.title }
+    #html.title(full-title)
+    // Tola's `auto_og` emits og:description but not og:title, so link
+    // previews (Discord, social) would otherwise show no page name.
+    #html.elem("meta", attrs: (property: "og:title", content: full-title))
   ],
   view: (body, m) => {
     show heading.where(level: 1): it => html.h2(class: cls(

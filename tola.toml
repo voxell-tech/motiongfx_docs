@@ -5,7 +5,7 @@
 [site.info]
 title = "MotionGfx"
 email = "voxell.technologies@gmail.com"
-description = "A backend-agnostic motion graphics framework for procedural animation."
+description = "A backend agnostic motion graphics creation framework. Free and open-source forever."
 language = "en"
 url = "https://motiongfx.voxell.dev"
 
