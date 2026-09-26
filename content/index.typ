@@ -13,7 +13,7 @@
 // pluggable, not built yet.
 //
 // Colors bake into the SVG at build time, so this can't react live to
-// the theme toggle the way the rest of the page's CSS does — instead,
+// the theme toggle the way the rest of the page's CSS does. Instead,
 // both variants get rendered up front (reusing this site's own light/
 // dark tokens from shared/styles.css) and toggled with the same
 // [data-theme] CSS technique the shared nav's sun/moon icon already
@@ -113,7 +113,7 @@
 // Feature: relative actions
 #ui.showcase-demo(
   title: "Relative, Not Absolute",
-  description: "An action's closure receives the field's current value, so each step can build on wherever the last one left off, not jump to a fixed number pulled from nowhere.",
+  description: "An action's closure receives the field's current value, so each step picks up wherever the last one left off.",
   code-label: "Rust",
   preview-label: "Live Playground",
   code: ui.rust-snippet("/js_motiongfx/src/demos/relative.rs"),
@@ -127,7 +127,7 @@
 // Feature: it's just code
 #ui.showcase-demo(
   title: "It's Just Code",
-  description: "No special timeline UI to hand-place anything in: a scene is built with the same loops and variables you already reach for.",
+  description: "A scene is plain Rust, built with the same loops and variables you already use.",
   code-label: "Rust",
   preview-label: "Live Playground",
   code: ui.rust-snippet("/js_motiongfx/src/demos/bars.rs"),
@@ -142,14 +142,14 @@
 // Feature: two-way playback
 #ui.showcase-demo(
   title: "Scrub Forward and Backward, for Free",
-  description: "Every timeline bakes once, then plays at any speed, in either direction, or jumps straight to a frame. No extra computation, no re-simulation.",
+  description: "A timeline bakes once. After that it plays at any speed, in either direction, or jumps straight to any frame without re-simulating anything.",
   code-label: "Rust",
   preview-label: "Live Playground",
   code: ui.rust-snippet("/js_motiongfx/src/demos/bounce.rs"),
   preview: ui.player-block(
     id: "bounce-demo",
     script: "/js/demos/bounce-demo.js",
-    caption: [Drag the scrubber, backward costs the same as forward.],
+    caption: [Drag the scrubber: backward costs the same as forward.],
   ),
 )
 
@@ -159,9 +159,9 @@
     #html.div(class: "flex-1 text-center md:text-left")[
       #html.h2(class: "text-3xl font-bold mb-2")[Backend Agnostic]
       #html.p(class: "text-muted text-lg")[
-        MotionGfx describes what changes, never how it gets drawn. Any
-        renderer that can read a value back can play it: Bevy today,
-        anything else tomorrow.
+        MotionGfx describes what changes and leaves drawing to the
+        backend. Bevy is supported today, and any renderer that can read
+        and write its own values can be next.
       ]
       #html.a(
         class: "inline-block mt-4 px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold hover:border-accent/50 hover:text-accent transition-colors",
@@ -183,8 +183,8 @@
     #html.div(class: "flex-1 text-center md:text-left")[
       #html.h2(class: "text-3xl font-bold mb-2")[Start With Bevy]
       #html.p(class: "text-muted text-lg")[
-        Bevy MotionGfx wires everything up for you: add the plugin, describe
-        what should change, and it plays. No boilerplate to write.
+        Bevy MotionGfx handles the setup for you. Add the plugin, describe
+        what should change, and it plays.
       ]
       #html.a(
         class: "inline-block mt-4 px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:opacity-90 transition-opacity",
@@ -247,9 +247,9 @@
 
 // Closing CTA
 #html.div(class: "text-center py-12")[
-  #html.h2(class: "text-3xl font-bold mb-4")[Ready to animate?]
+  #html.h2(class: "text-3xl font-bold mb-4")[Ready to Animate?]
   #html.a(
     class: "px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold text-lg hover:opacity-90 transition-opacity",
     href: "/docs",
-  )[Read the Quickstart →]
+  )[Get Started →]
 ]

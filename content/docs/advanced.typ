@@ -4,10 +4,9 @@
 
 = Building a Backend
 
-Bevy MotionGfx does exactly one thing: implement `SubjectSource` for
-Bevy's `World`. That's the whole seam. This page is what building your
-own looks like, whether that's a new backend or just skipping having one
-at all.
+Bevy MotionGfx does one thing: it implements `SubjectSource` for Bevy's
+`World`. This page shows how to do the same for your own world type,
+whether that's a new backend or a plain struct with no engine behind it.
 
 == SubjectSource
 

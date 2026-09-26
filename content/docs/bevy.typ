@@ -66,8 +66,8 @@ fn build_timeline(
 }
 ```
 
-`cube` and `material` are what you'll animate in a moment, both
-identified by id, the same way every backend addresses a subject.
+`cube` and `material` are the two subjects you'll animate next. Both are
+ids, which is how every backend addresses a subject.
 
 == Describe the animation
 
@@ -98,8 +98,8 @@ for combinators like `.ord_all()`, and
 `b.compile()` actually produce.
 
 `RealtimePlayer` samples the timeline every frame and writes the
-results back onto your entities, so once it's spawned, you don't call
-anything else yourself, it just plays.
+results back onto your entities. Once it's spawned, there's nothing else
+to call.
 
 == Run it
 

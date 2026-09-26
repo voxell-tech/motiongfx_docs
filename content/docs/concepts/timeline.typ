@@ -39,8 +39,8 @@ timeline.queue_actions();
 timeline.sample_queued_actions(&registry, &mut world);
 ```
 
-Call this with any time in the track's range, in any order. Forward,
-backward, the exact same instant twice, it always works.
+You can call this with any time in the track's range, in any order:
+forward, backward, or the same instant twice.
 
 == Two-way playback
 
@@ -48,11 +48,9 @@ Sampling only ever reads two already-baked values and interpolates
 between them. Nothing gets replayed, so moving backward costs exactly the
 same as moving forward.
 
-Six circles fly in staggered, growing and recoloring together, then a
-bounce ripples through the row once they've landed, flashing back toward
-cyan as each one grows. All of it, forward or backward, is the same baked
-`Track`, sampled at whatever time you ask for. Drag the scrubber, jump
-around, run it backward: nothing gets re-simulated.
+In the demo below, six circles fly in on a stagger, growing and changing
+color, then a bounce ripples through the row. All of it is one baked
+`Track`, sampled at whatever time the scrubber asks for.
 
 #ui.live-demo(
   id: "timeline-showcase-demo",

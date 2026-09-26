@@ -29,8 +29,8 @@ to something you can actually see.
   ],
 )
 
-== Then, learn the concepts
+== Then learn the concepts
 
 Once you can see something animate, #link("/docs/concepts/actions")[Concepts]
-walks through how MotionGfx actually builds and plays an animation, one
-short page at a time. It applies to every backend equally.
+walks through how MotionGfx builds and plays an animation, one short
+page at a time. It applies to every backend equally.
