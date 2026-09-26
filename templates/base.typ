@@ -78,11 +78,10 @@
     style: "display: inline-block; vertical-align: middle;",
   ))
 
-  // A CTA, not a stat like the two badges above, so it gets its own
-  // small pill instead of shields.io styling: text, not just an icon,
-  // since "sponsor" isn't self-explanatory as a glyph the way GitHub's
-  // or Discord's logos are.
-  let sponsor-button = html.span(
+  // A call to action rather than a stat like the two badges above, so it
+  // gets its own pill instead of shields.io styling, with a text label
+  // since there's no universally recognized "donate" glyph.
+  let donate-button = html.span(
     class: "px-2.5 py-1 rounded-md border-2 border-red/40 bg-red text-white text-sm font-medium hover:opacity-90 transition-opacity",
   )[♥ Donate]
 
@@ -107,7 +106,7 @@
       ),
       (label: discord-badge, href: links.discord, external: true),
       (
-        label: sponsor-button,
+        label: donate-button,
         // MotionGfx's own OpenCollective project, not the umbrella
         // Voxell page (links.opencollective): donations here go
         // specifically toward this project, not Voxell as a whole.

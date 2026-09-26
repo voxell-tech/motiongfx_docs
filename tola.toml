@@ -38,7 +38,6 @@ deps = ["templates", "utils", "components", "shared"]
 [build.assets]
 nested = [
   "assets/styles",
-  "assets/fonts",
   "assets/js",
   "assets/wasm",
   "assets/images",

@@ -1,9 +1,6 @@
 // UI components
 // Import: #import "/components/ui.typ" as ui
 
-#import "/utils/tola.typ": cls
-#import "/components/layout.typ" as layout
-
 /// Newsletter signup, posting straight to Kit (form 9965001). A plain
 /// `<form>`, not Kit's embed script: that script ships its own light-only
 /// styling, and Tola's SPA navigation never re-runs inserted `<script>`s
@@ -40,84 +37,10 @@
   ]
 ]
 
-/// Navigation link
-#let nav-link(href, label) = html.a(
-  class: "text-muted hover:text-accent transition-colors",
-  href: href,
-)[#label]
-
-/// Tag badge
-#let tag(name) = html.span(
-  class: "px-2 py-1 text-xs bg-surface rounded text-accent",
-)[#name]
-
 /// Card container
 #let card(title: none, body) = html.div(class: "p-4 bg-surface rounded-lg")[
   #if title != none { html.h3(class: "font-semibold text-accent mb-2")[#title] }
   #body
-]
-
-/// Post card for blog listings
-#let post-card(post) = {
-  let date = post.at("date", default: "")
-  html.a(
-    class: "block mb-6 p-4 border border-text/10 rounded-lg bg-surface/50 hover:bg-surface transition-colors no-underline group",
-    href: post.permalink,
-  )[
-    #html.h3(
-      class: "text-xl font-semibold mb-2 group-hover:text-accent transition-colors",
-    )[
-      #post.title
-    ]
-
-    #layout.flex-row(
-      gap: 4,
-      html.span(class: "text-sm text-muted")[#date],
-      ..post.at("tags", default: ()).map(t => tag(t)),
-    )
-
-    #if post.at("summary", default: none) != none {
-      html.p(class: "mt-2 text-muted")[#post.at("summary")]
-    }
-  ]
-}
-
-/// Project card with name, shields.io badges, and description
-#let project-card(name, url, repo, description, crate: none) = html.div(
-  class: "flex flex-col p-4 bg-surface rounded-lg border border-text/10 hover:border-accent/30 transition-colors",
-)[
-  #html.a(
-    class: "font-bold text-lg hover:text-accent transition-colors mb-2",
-    href: url,
-    target: "_blank",
-    rel: ("noopener", "noreferrer"),
-  )[#name ↗]
-  #html.p(class: "text-muted text-sm mb-3 grow")[#description]
-  #let c = if crate != none { crate } else { name }
-  #let crates-url = "https://crates.io/crates/" + c
-  #html.div(class: "flex flex-wrap mt-auto")[
-    #html.a(href: url, target: "_blank", rel: ("noopener", "noreferrer"))[
-      #html.elem("img", attrs: (
-        src: "https://img.shields.io/github/stars/"
-          + repo
-          + "?style=flat&logo=github&label",
-        alt: "GitHub stars",
-        height: "20",
-      ))
-    ]
-    #html.a(href: crates-url, target: "_blank", rel: (
-      "noopener",
-      "noreferrer",
-    ))[
-      #html.elem("img", attrs: (
-        src: "https://img.shields.io/crates/v/"
-          + c
-          + "?style=flat&logo=rust&label",
-        alt: "crates.io version",
-        height: "20",
-      ))
-    ]
-  ]
 ]
 
 /// Reads a Rust source file and pulls out the region between a

@@ -1,5 +1,5 @@
 // Docs sidebar data and components.
-// Import: #import "/components/docs-nav.typ": sidebar, next-page
+// Import: #import "/components/docs-nav.typ": sidebar, page-nav
 
 #import "@tola/current:0.0.0": current-permalink
 

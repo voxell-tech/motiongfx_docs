@@ -35,27 +35,6 @@ export function signal(runtime, name, initial) {
   };
 }
 
-/**
- * A compound signal over two `f64` subjects, `name.x` and `name.y` (the
- * `js/runtime.ts` `vec2Signal` wrapper, inlined for the same reason as
- * `signal` above). Call with no args to read both components; call with
- * a target `{x, y}` and a duration to animate both together with the
- * same easing, returned as a Fragment. `.x`/`.y` are the two per-axis
- * signals, for reading or animating one on its own.
- */
-export function vec2Signal(runtime, name, initial) {
-  const x = signal(runtime, `${name}.x`, initial.x);
-  const y = signal(runtime, `${name}.y`, initial.y);
-
-  const fn = (to, durationSecs, ease) => {
-    if (to === undefined) return { x: x(), y: y() };
-    return all([x(to.x, durationSecs, ease), y(to.y, durationSecs, ease)]);
-  };
-  fn.x = x;
-  fn.y = y;
-  return fn;
-}
-
 let wasmReady = null;
 
 function loadWasm() {
