@@ -222,9 +222,9 @@
         target: "_blank",
         rel: ("noopener", "noreferrer"),
       )[Moxie]
-      is a Bevy editor for MotionGfx: hierarchy, inspector, and a
-      scrubbable timeline built on the same chain/all/flow combinators
-      these docs cover, no code required to arrange them.
+      is a Bevy editor for MotionGfx, with a hierarchy, an inspector, and
+      a scrubbable timeline built on the same chain/all/flow combinators
+      these docs cover. You arrange them visually, without writing code.
     ]
     #html.a(
       class: "inline-block mt-4 px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold hover:border-accent/50 hover:text-accent transition-colors",
