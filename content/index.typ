@@ -169,8 +169,13 @@
       )[Build Your Own Backend →]
     ]
     #html.div(class: "flex-1 flex justify-center")[
-      #html.span(class: "diagram-dark")[#html.frame(backend-diagram(dark: true))]
-      #html.span(class: "diagram-light")[#html.frame(backend-diagram(dark: false))]
+      #html.elem("div", attrs: (
+        role: "img",
+        aria-label: "Diagram: MotionGfx connects to Bevy today, with your own renderer or others pluggable in the same way.",
+      ))[
+        #html.span(class: "diagram-dark")[#html.frame(backend-diagram(dark: true))]
+        #html.span(class: "diagram-light")[#html.frame(backend-diagram(dark: false))]
+      ]
     ]
   ]
 ]

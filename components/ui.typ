@@ -239,6 +239,7 @@
 #let player-block(
   id: none,
   script: none,
+  label: "Live MotionGfx animation",
   width: 680,
   height: 170,
   caption: none,
@@ -254,6 +255,8 @@
     ))[
       #html.elem("canvas", attrs: (
         id: id,
+        role: "img",
+        aria-label: label,
         class: "mgfx-player-canvas",
         width: str(width),
         height: str(height),
