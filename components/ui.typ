@@ -42,12 +42,14 @@
   ]
 ]
 
-/// The same signup as a small popup: a card in the bottom-right corner
-/// from sm: up, a thin bar along the bottom edge below that. Starts
+/// The same signup as a small popup: a card centered along the bottom
+/// edge from sm: up (inset-x-0 plus auto margins, not a translate, since
+/// the slide-in animation already owns `translate`), a thin bar along
+/// the bottom edge below that. Starts
 /// hidden; assets/js/newsletter-popup.js decides when (and whether) to
 /// show it. Not a modal: it never takes focus or blocks the page.
 #let newsletter-popup() = html.elem("aside", attrs: (
-  class: "newsletter-popup fixed z-40 inset-x-0 bottom-0 sm:inset-x-auto sm:bottom-4 sm:right-4 sm:w-[22rem] bg-surface border-t-2 sm:border-2 border-accent/60 sm:rounded-lg shadow-xl shadow-accent/10 p-3 sm:p-4 transition duration-300 translate-y-4 opacity-0 data-open:translate-y-0 data-open:opacity-100 motion-reduce:transition-none",
+  class: "newsletter-popup fixed z-40 inset-x-0 bottom-0 sm:mx-auto sm:bottom-6 sm:w-[22rem] bg-surface border-t-2 sm:border-2 border-accent/60 sm:rounded-lg shadow-xl shadow-accent/10 p-3 sm:p-4 transition duration-300 translate-y-4 opacity-0 data-open:translate-y-0 data-open:opacity-100 motion-reduce:transition-none",
   aria-label: "Newsletter signup",
   hidden: "",
 ))[
