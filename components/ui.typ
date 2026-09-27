@@ -47,13 +47,36 @@
 /// hidden; assets/js/newsletter-popup.js decides when (and whether) to
 /// show it. Not a modal: it never takes focus or blocks the page.
 #let newsletter-popup() = html.elem("aside", attrs: (
-  class: "newsletter-popup fixed z-40 inset-x-0 bottom-0 sm:inset-x-auto sm:bottom-4 sm:right-4 sm:w-80 bg-surface border-t sm:border border-text/10 sm:rounded-lg shadow-xl p-3 sm:p-4 transition duration-300 translate-y-4 opacity-0 data-open:translate-y-0 data-open:opacity-100 motion-reduce:transition-none",
+  class: "newsletter-popup fixed z-40 inset-x-0 bottom-0 sm:inset-x-auto sm:bottom-4 sm:right-4 sm:w-[22rem] bg-surface border-t-2 sm:border-2 border-accent/60 sm:rounded-lg shadow-xl shadow-accent/10 p-3 sm:p-4 transition duration-300 translate-y-4 opacity-0 data-open:translate-y-0 data-open:opacity-100 motion-reduce:transition-none",
   aria-label: "Newsletter signup",
   hidden: "",
 ))[
-  #html.div(class: "flex items-start justify-between gap-2 mb-2")[
-    #html.p(class: "text-sm font-semibold text-text")[
-      Get MotionGfx and Moxie updates by email.
+  #html.div(class: "flex items-start justify-between gap-2 mb-3")[
+    #html.div(class: "flex items-start gap-2.5")[
+      // Mail icon, so it reads as a signup before anyone reads the words.
+      #html.elem("svg", attrs: (
+        class: "shrink-0 mt-0.5 text-accent",
+        width: "20",
+        height: "20",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        stroke-width: "2",
+        stroke-linecap: "round",
+        stroke-linejoin: "round",
+        aria-hidden: "true",
+      ))[
+        #html.elem("rect", attrs: (x: "2", y: "4", width: "20", height: "16", rx: "2"))[]
+        #html.elem("path", attrs: (d: "m22 7-10 6L2 7"))[]
+      ]
+      #html.div[
+        #html.p(class: "text-base font-bold text-text leading-tight")[
+          Get Updates by Email
+        ]
+        #html.p(class: "text-xs text-muted mt-0.5 max-sm:hidden")[
+          MotionGfx and Moxie news, now and then.
+        ]
+      ]
     ]
     #html.elem("button", attrs: (
       type: "button",
