@@ -5,7 +5,7 @@
 
 #show: page.with(
   title: none,
-  summary: "MotionGfx is a backend agnostic motion graphics creation framework for Rust. Build animations in code and play them on any backend. Free and open-source forever.",
+  summary: "MotionGfx is a backend agnostic motion graphics creation framework for Rust. Free and open-source forever.",
 )
 
 // "Backend Agnostic" diagram: a real node/edge graph via CeTZ, embedded
