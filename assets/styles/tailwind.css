@@ -13,6 +13,25 @@
     --color-green: #a9dc76;
 }
 
+/* Syntax highlighting. Typst highlights code blocks at build time with
+   the dark Monokai Pro theme (templates/monokai-pro.tmTheme), baking each
+   token's color in as an inline `style="color: ..."`. Light mode remaps
+   each of those dark colors to its light counterpart (the same pairs as
+   shared/scripts/monokai-pro-shiki.js); `!important` because the dark
+   color is an inline style. Text with no token color just inherits the
+   page's own text color, which already follows the theme. */
+/* Typst's HTML output keeps a theme's colors but drops its font styles,
+   so comments get their italic back here. */
+pre span[style*="#939293"] { font-style: italic; }
+
+[data-theme="light"] pre span[style*="#939293"] { color: #656565 !important; }
+[data-theme="light"] pre span[style*="#ffd866"] { color: #8a6400 !important; }
+[data-theme="light"] pre span[style*="#ab9df2"] { color: #6248c8 !important; }
+[data-theme="light"] pre span[style*="#ff6188"] { color: #c4224f !important; }
+[data-theme="light"] pre span[style*="#a9dc76"] { color: #4a761e !important; }
+[data-theme="light"] pre span[style*="#78dce8"] { color: #0c7685 !important; }
+[data-theme="light"] pre span[style*="#fcfcfa"] { color: #2d2a2e !important; }
+
 /* Backend Agnostic diagram (content/index.typ): both a dark- and a
    light-tinted render of the same CeTZ diagram ship in the page, since
    the SVG's colors bake in at build time and can't react live the way

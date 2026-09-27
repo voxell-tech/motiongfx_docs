@@ -35,8 +35,14 @@
     colors.code,
   ))[#it.text]
 
-  // The theme (see /js/syntax-highlight.js) sets the block's own
-  // background; this wrapper is just for margin and the border.
+  // Code blocks are highlighted at build time with Monokai Pro, so the
+  // colors are in the HTML from the first paint (no client-side
+  // highlighter to wait on). Light mode remaps the colors in CSS; see
+  // the "Syntax highlighting" block in assets/styles/tailwind.css.
+  set raw(theme: "/templates/monokai-pro.tmTheme")
+
+  // The block's own background comes from shared/styles.css's `pre`;
+  // this wrapper is just for margin and the border.
   show raw.where(block: true): it => html.div(
     class: "my-2 border border-text/10 rounded-lg",
   )[#it]
@@ -129,7 +135,6 @@
 
   footer()
 
-  html.elem("script", attrs: (type: "module", src: "/js/syntax-highlight.js"))[]
   html.elem("script", attrs: (type: "module", src: "/js/demo-bootstrap.js"))[]
   html.elem("script", attrs: (type: "module", src: "/js/docs-nav.js"))[]
   html.elem("script", attrs: (type: "module", src: "/js/newsletter.js"))[]
