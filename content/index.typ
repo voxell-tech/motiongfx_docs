@@ -153,8 +153,10 @@
   ),
 )
 
-// Feature: backend agnostic
-#html.section(class: "py-12 px-4 sm:px-6")[
+// Feature: backend agnostic. Its id is also the newsletter popup's
+// trigger (assets/js/newsletter-popup.js): reaching it means the visitor
+// has scrolled past all three demos.
+#html.section(id: "backend-agnostic", class: "py-12 px-4 sm:px-6")[
   #html.div(class: "flex flex-col md:flex-row items-center gap-8")[
     #html.div(class: "flex-1 text-center md:text-left")[
       #html.h2(class: "text-3xl font-bold mb-2")[Backend Agnostic]
@@ -247,6 +249,7 @@
 
 // Newsletter: right after Moxie, since the list covers both projects.
 #ui.newsletter()
+#ui.newsletter-popup()
 
 #layout.hr
 

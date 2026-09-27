@@ -1,37 +1,80 @@
 // UI components
 // Import: #import "/components/ui.typ" as ui
 
-/// Newsletter signup, posting straight to Kit (form 9965001). A plain
-/// `<form>`, not Kit's embed script: that script ships its own light-only
-/// styling, and Tola's SPA navigation never re-runs inserted `<script>`s
-/// anyway. Styled with the site's own tokens, so it follows the theme
-/// toggle. assets/js/newsletter.js upgrades it to submit in place; with
-/// no JS it still works, it just lands on Kit's hosted confirmation page.
+/// The newsletter `<form>` itself, posting straight to Kit (form
+/// 9965001). A plain form, not Kit's embed script: that script ships its
+/// own light-only styling, and Tola's SPA navigation never re-runs
+/// inserted `<script>`s anyway. Styled with the site's own tokens, so it
+/// follows the theme toggle. assets/js/newsletter.js upgrades every
+/// `.newsletter-form` to submit in place; with no JS it still works, it
+/// just lands on Kit's hosted confirmation page. `field-bg` is the
+/// input's background, so it contrasts with whatever it sits on.
+#let newsletter-form(layout: "flex flex-col sm:flex-row gap-2", field-bg: "bg-surface") = html.elem("form", attrs: (
+  class: "newsletter-form " + layout,
+  action: "https://app.kit.com/forms/9965001/subscriptions",
+  method: "post",
+))[
+  #html.elem("input", attrs: (
+    type: "email",
+    name: "email_address",
+    required: "",
+    placeholder: "you@example.com",
+    aria-label: "Email address",
+    class: "flex-1 min-w-0 px-4 py-2.5 rounded-lg text-text border border-text/15 placeholder:text-muted focus:outline-none focus:border-accent " + field-bg,
+  ))
+  #html.elem("button", attrs: (
+    type: "submit",
+    class: "px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-50",
+  ))[Subscribe]
+]
+
+/// Newsletter signup section for the landing page.
 #let newsletter() = html.section(class: "py-12 px-4 sm:px-6")[
   #html.div(class: "max-w-xl mx-auto text-center")[
     #html.h2(class: "text-3xl font-bold mb-2")[Get Updates by Email]
     #html.p(class: "text-muted text-lg mb-6")[
       We'll email you when MotionGfx or Moxie has something new.
     ]
-    #html.elem("form", attrs: (
-      class: "newsletter-form flex flex-col sm:flex-row gap-2",
-      action: "https://app.kit.com/forms/9965001/subscriptions",
-      method: "post",
-    ))[
-      #html.elem("input", attrs: (
-        type: "email",
-        name: "email_address",
-        required: "",
-        placeholder: "you@example.com",
-        aria-label: "Email address",
-        class: "flex-1 min-w-0 px-4 py-2.5 rounded-lg bg-surface text-text border border-text/15 placeholder:text-muted focus:outline-none focus:border-accent",
-      ))
-      #html.elem("button", attrs: (
-        type: "submit",
-        class: "px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-50",
-      ))[Subscribe]
-    ]
+    #newsletter-form()
     #html.p(class: "newsletter-status text-sm text-muted mt-3")[
+      No spam. Unsubscribe anytime.
+    ]
+  ]
+]
+
+/// The same signup as a small popup: a card in the bottom-right corner
+/// from sm: up, a thin bar along the bottom edge below that. Starts
+/// hidden; assets/js/newsletter-popup.js decides when (and whether) to
+/// show it. Not a modal: it never takes focus or blocks the page.
+#let newsletter-popup() = html.elem("aside", attrs: (
+  class: "newsletter-popup fixed z-40 inset-x-0 bottom-0 sm:inset-x-auto sm:bottom-4 sm:right-4 sm:w-80 bg-surface border-t sm:border border-text/10 sm:rounded-lg shadow-xl p-3 sm:p-4 transition duration-300 translate-y-4 opacity-0 data-open:translate-y-0 data-open:opacity-100 motion-reduce:transition-none",
+  aria-label: "Newsletter signup",
+  hidden: "",
+))[
+  #html.div(class: "flex items-start justify-between gap-2 mb-2")[
+    #html.p(class: "text-sm font-semibold text-text")[
+      Get MotionGfx and Moxie updates by email.
+    ]
+    #html.elem("button", attrs: (
+      type: "button",
+      class: "newsletter-popup-close shrink-0 text-muted hover:text-text transition-colors cursor-pointer bg-transparent border-0 p-0 leading-none",
+      aria-label: "Close",
+    ))[#html.elem("svg", attrs: (
+      width: "14",
+      height: "14",
+      viewBox: "0 0 16 16",
+      fill: "none",
+      stroke: "currentColor",
+      stroke-width: "2",
+      stroke-linecap: "round",
+    ))[
+      #html.elem("line", attrs: (x1: "2", y1: "2", x2: "14", y2: "14"))[]
+      #html.elem("line", attrs: (x1: "14", y1: "2", x2: "2", y2: "14"))[]
+    ]]
+  ]
+  #html.div[
+    #newsletter-form(layout: "flex gap-2", field-bg: "bg-bg")
+    #html.p(class: "newsletter-status text-xs text-muted mt-2 max-sm:hidden")[
       No spam. Unsubscribe anytime.
     ]
   ]
