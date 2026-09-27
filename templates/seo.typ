@@ -5,8 +5,7 @@
 // site-wide description; this emits the page's own `summary` instead.
 //
 // Page metadata it reads:
-// - `title`: shown as "Title | MotionGfx"; with none (the home page),
-//   `home-title` instead, so the tab and link previews say what it is.
+// - `title`: shown as "Title | MotionGfx" (just "MotionGfx" if none).
 // - `summary`: the meta description; falls back to the site's.
 // - `noindex`: keep the page out of search results (the 404 page).
 
@@ -14,15 +13,13 @@
 #import "@tola/site:0.0.0": info
 #import "@tola/current:0.0.0": current-permalink
 
-#let home-title = "MotionGfx: Backend Agnostic Motion Graphics Creation Framework"
-
 // Social preview card, 1200x630 (assets/images/og.png).
 #let og-image = "/images/og.png"
 
 #let seo-head(m) = {
   let full-title = if m.title != none {
     m.title + " | " + info.title
-  } else { home-title }
+  } else { info.title }
   let description = m.at("summary", default: none)
   if description == none { description = info.description }
   let site = info.url.trim("/", at: end)
