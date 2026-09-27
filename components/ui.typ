@@ -9,9 +9,9 @@
 /// no JS it still works, it just lands on Kit's hosted confirmation page.
 #let newsletter() = html.section(class: "py-12 px-4 sm:px-6")[
   #html.div(class: "max-w-xl mx-auto text-center")[
-    #html.h2(class: "text-3xl font-bold mb-2")[Stay in the Loop!]
+    #html.h2(class: "text-3xl font-bold mb-2")[Get Updates by Email]
     #html.p(class: "text-muted text-lg mb-6")[
-      New MotionGfx releases and Moxie updates, straight to your inbox!
+      We'll email you when MotionGfx or Moxie has something new.
     ]
     #html.elem("form", attrs: (
       class: "newsletter-form flex flex-col sm:flex-row gap-2",
@@ -29,10 +29,10 @@
       #html.elem("button", attrs: (
         type: "submit",
         class: "px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-50",
-      ))[Keep Me Posted!]
+      ))[Subscribe]
     ]
     #html.p(class: "newsletter-status text-sm text-muted mt-3")[
-      Only when there's something worth sharing. Unsubscribe anytime.
+      No spam. Unsubscribe anytime.
     ]
   ]
 ]
