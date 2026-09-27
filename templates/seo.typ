@@ -13,8 +13,11 @@
 #import "@tola/site:0.0.0": info
 #import "@tola/current:0.0.0": current-permalink
 
-// Social preview card, 1200x630 (assets/images/og.png).
-#let og-image = "/images/og.png"
+// Social preview card, 1200x630 (assets/images/og.png, made from
+// scripts/og-image.typ). Bump `v` whenever the image changes: Discord,
+// X, and others cache preview images by URL, so the same URL keeps
+// showing the old card.
+#let og-image = "/images/og.png?v=2"
 
 #let seo-head(m) = {
   let full-title = if m.title != none {
