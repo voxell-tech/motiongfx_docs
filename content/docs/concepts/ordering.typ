@@ -1,7 +1,10 @@
 #import "/templates/docs.typ": docs-page
 #import "/components/ui.typ" as ui
 
-#show: docs-page.with(title: "Ordering")
+#show: docs-page.with(
+  title: "Ordering",
+  summary: "Combine animation fragments with chain, all, any, flow, and delay, with a live demo of each.",
+)
 
 = Ordering
 

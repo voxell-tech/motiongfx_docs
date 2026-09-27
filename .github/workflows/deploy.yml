@@ -40,7 +40,10 @@ jobs:
       # GitHub Pages serves /404.html for unknown URLs, but Tola emits
       # every page as <name>/index.html (see content/404.typ).
       - name: Add 404 page
-        run: cp public/404/index.html public/404.html
+        run: |
+          cp public/404/index.html public/404.html
+          # Keep the 404 page out of the sitemap (it's also noindex).
+          sed -i 's#<url><loc>[^<]*/404/</loc></url>##' public/sitemap.xml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -2,7 +2,10 @@
 #import "/components/ui.typ" as ui
 #import "/components/layout.typ" as layout
 
-#show: docs-page.with(title: "Choose a Backend")
+#show: docs-page.with(
+  title: "Choose a Backend",
+  summary: "Pick a MotionGfx backend to start with: Bevy MotionGfx for Bevy games and apps, or build your own for any other renderer.",
+)
 
 = Choose a Backend
 

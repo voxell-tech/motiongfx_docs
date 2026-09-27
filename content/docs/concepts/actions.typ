@@ -1,6 +1,9 @@
 #import "/templates/docs.typ": docs-page
 
-#show: docs-page.with(title: "Actions")
+#show: docs-page.with(
+  title: "Actions",
+  summary: "An action describes what should change on a field. Learn how to create one with the builder and give it timing with play().",
+)
 
 = Actions
 

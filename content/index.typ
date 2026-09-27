@@ -3,7 +3,10 @@
 #import "/components/layout.typ" as layout
 #import "@preview/cetz:0.5.2": canvas, draw
 
-#show: page.with(title: none)
+#show: page.with(
+  title: none,
+  summary: "MotionGfx is a backend agnostic motion graphics creation framework for Rust. Build animations in code and play them in Bevy. Free and open-source forever.",
+)
 
 // "Backend Agnostic" diagram: a real node/edge graph via CeTZ, embedded
 // as an SVG via html.frame the same way templates/tola.typ embeds math.
@@ -70,6 +73,20 @@
     })
   ]
 }
+
+// Structured data for search engines (schema.org): what this project
+// is, where its source lives, and its license.
+#html.elem("script", attrs: (type: "application/ld+json"))[#(
+  "{\"@context\":\"https://schema.org\","
+    + "\"@type\":\"SoftwareSourceCode\","
+    + "\"name\":\"MotionGfx\","
+    + "\"description\":\"A backend agnostic motion graphics creation framework. Free and open-source forever.\","
+    + "\"url\":\"https://motiongfx.voxell.dev\","
+    + "\"codeRepository\":\"https://github.com/voxell-tech/motiongfx\","
+    + "\"programmingLanguage\":\"Rust\","
+    + "\"license\":\"https://spdx.org/licenses/MIT.html\","
+    + "\"author\":{\"@type\":\"Organization\",\"name\":\"Voxell\",\"url\":\"https://voxell.dev\"}}"
+)]
 
 // Hero
 #html.div(class: "text-center py-20 px-5")[

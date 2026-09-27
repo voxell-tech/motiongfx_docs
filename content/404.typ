@@ -3,7 +3,7 @@
 // GitHub Pages serves /404.html for any URL that doesn't exist. Tola
 // always emits a page as <name>/index.html, so the deploy workflow
 // copies this page's output to /404.html after the build.
-#show: page.with(title: "Page Not Found")
+#show: page.with(title: "Page Not Found", noindex: true)
 
 #html.div(class: "text-center py-24 px-5")[
   #html.p(class: "text-accent font-semibold mb-2")[404]

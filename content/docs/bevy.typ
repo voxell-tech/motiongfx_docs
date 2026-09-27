@@ -1,6 +1,9 @@
 #import "/templates/docs.typ": docs-page
 
-#show: docs-page.with(title: "Bevy MotionGfx")
+#show: docs-page.with(
+  title: "Bevy MotionGfx",
+  summary: "Set up Bevy MotionGfx in a Bevy project: add the plugin, spawn something to animate, and play a timeline.",
+)
 
 = Bevy MotionGfx
 

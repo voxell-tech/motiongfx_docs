@@ -1,7 +1,10 @@
 #import "/templates/docs.typ": docs-page
 #import "/components/ui.typ" as ui
 
-#show: docs-page.with(title: "Timeline")
+#show: docs-page.with(
+  title: "Timeline",
+  summary: "Compile fragments into a track, bake it once, and sample it at any point in time, forward or backward.",
+)
 
 = Timeline
 

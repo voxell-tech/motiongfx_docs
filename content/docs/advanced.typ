@@ -1,6 +1,9 @@
 #import "/templates/docs.typ": docs-page
 
-#show: docs-page.with(title: "Building a Backend")
+#show: docs-page.with(
+  title: "Building a Backend",
+  summary: "Build your own MotionGfx backend by implementing SubjectSource for your world type, with no engine required.",
+)
 
 = Building a Backend
 

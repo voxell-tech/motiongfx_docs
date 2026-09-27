@@ -20,7 +20,8 @@ elements = [
 spa = true
 
 [site.seo]
-auto_og = true
+# Off: templates/seo.typ emits per-page descriptions and OG tags instead.
+auto_og = false
 
 [site.seo.feed]
 enable = false
@@ -51,7 +52,8 @@ nested = [
 # would collide with shared/icons both wanting to output to /icons.
 flatten = [
   { file = "assets/favicon/favicon.ico", as = "favicon.ico" },
-  { file = "assets/icons/bevy.svg", as = "icons/bevy.svg" }
+  { file = "assets/icons/bevy.svg", as = "icons/bevy.svg" },
+  { file = "assets/robots.txt", as = "robots.txt" }
 ]
 
 [build.slug]
