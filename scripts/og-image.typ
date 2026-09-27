@@ -14,7 +14,7 @@
   spacing: 30pt,
   text(size: 150pt, weight: "bold", tracking: -3pt)[Motion#text(fill: accent)[Gfx]],
   text(size: 38pt, fill: muted)[A backend agnostic motion graphics creation framework.],
-  text(size: 28pt, fill: accent)[Free and open-source forever · Rust · Bevy],
+  text(size: 28pt, fill: accent)[Free and open-source forever · Rust],
 ))
 
 #place(bottom + center, dy: -40pt)[
