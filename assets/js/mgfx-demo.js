@@ -22,7 +22,7 @@ import init, {
   flow,
   RelativeDemo,
   Runtime,
-} from "/wasm/js_motiongfx.js";
+} from "/wasm/js_motiongfx.mjs";
 
 export { act, all, any, BarsDemo, BounceDemo, chain, delay, Ease, flow, RelativeDemo, Runtime };
 
