@@ -25,7 +25,7 @@ jobs:
 
       - name: Install Tola
         run: |
-          curl -fsSL https://github.com/tola-rs/tola-ssg/releases/latest/download/tola-x86_64-linux-static.tar.gz | tar -xz
+          curl -fsSL https://github.com/tola-rs/tola-ssg/releases/download/v0.7.1/tola-x86_64-linux-static.tar.gz | tar -xz
           sudo mv tola /usr/local/bin/
 
       - name: Install Tailwind CSS
