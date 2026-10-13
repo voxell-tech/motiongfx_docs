@@ -1,19 +1,13 @@
-#import "/templates/tola.typ": wrap-page
-#import "/templates/base.typ": base, colors
+#import "/templates/base.typ": colors
 #import "/utils/tola.typ": cls
-#import "/templates/seo.typ": seo-head
 
-#let page = wrap-page(
-  base: base,
-  head: seo-head,
-  view: (body, m) => {
-    show heading.where(level: 1): it => html.h2(class: cls(
-      "text-2xl font-bold mt-8 mb-4",
-      colors.accent,
-    ))[#it.body]
-    show heading.where(level: 2): it => html.h3(
-      class: "text-xl font-semibold mt-6 mb-3",
-    )[#it.body]
-    body
-  },
-)
+#let page-view(page, body) = {
+  show heading.where(level: 1): it => html.h2(class: cls(
+    "text-2xl font-bold mt-8 mb-4",
+    colors.accent,
+  ))[#it.body]
+  show heading.where(level: 2): it => html.h3(
+    class: "text-xl font-semibold mt-6 mb-3",
+  )[#it.body]
+  body
+}

@@ -1,12 +1,12 @@
-#import "/templates/page.typ": page
+#import "@tola/source:0.0.0": tola-meta
 #import "/components/ui.typ" as ui
 #import "/components/layout.typ" as layout
 #import "@preview/cetz:0.5.2": canvas, draw
 
-#show: page.with(
+#tola-meta((
   title: none,
   summary: "MotionGfx is a backend agnostic motion graphics creation framework for Rust. Free and open-source forever.",
-)
+))
 
 // "Backend Agnostic" diagram: a real node/edge graph via CeTZ, embedded
 // as an SVG via html.frame the same way templates/tola.typ embeds math.
@@ -108,7 +108,7 @@
   #html.div(class: "flex flex-wrap justify-center gap-3")[
     #html.a(
       class: "px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold text-lg hover:opacity-90 transition-opacity",
-      href: "/docs",
+      href: "/docs/",
     )[Get Started]
     #html.a(
       class: "flex items-center gap-2 px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold text-lg hover:border-accent/50 hover:text-accent transition-colors",
@@ -184,7 +184,7 @@
       ]
       #html.a(
         class: "inline-block mt-4 px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold hover:border-accent/50 hover:text-accent transition-colors",
-        href: "/docs/advanced",
+        href: "/docs/advanced/",
       )[Build Your Own Backend →]
     ]
     #html.div(class: "flex-1 flex justify-center")[
@@ -212,7 +212,7 @@
       ]
       #html.a(
         class: "inline-block mt-4 px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:opacity-90 transition-opacity",
-        href: "/docs/bevy",
+        href: "/docs/bevy/",
       )[Set Up Bevy MotionGfx →]
     ]
     #html.div(class: "flex-1 flex justify-center")[
@@ -275,6 +275,6 @@
   #html.h2(class: "text-3xl font-bold mb-4")[Ready to Animate?]
   #html.a(
     class: "px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold text-lg hover:opacity-90 transition-opacity",
-    href: "/docs",
+    href: "/docs/",
   )[Get Started →]
 ]

@@ -1,9 +1,12 @@
-#import "/templates/page.typ": page
+#import "@tola/source:0.0.0": tola-meta
 
-// GitHub Pages serves /404.html for any URL that doesn't exist. Tola
-// always emits a page as <name>/index.html, so the deploy workflow
-// copies this page's output to /404.html after the build.
-#show: page.with(title: "Page Not Found", noindex: true)
+// GitHub Pages serves /404.html for any URL that doesn't exist, so
+// this page is published at exactly that path.
+#tola-meta((
+  title: "Page Not Found",
+  permalink: "/404.html",
+  noindex: true,
+))
 
 #html.div(class: "text-center py-24 px-5")[
   #html.p(class: "text-accent font-semibold mb-2")[404]
@@ -18,7 +21,7 @@
     )[Go Home]
     #html.a(
       class: "px-5 py-2.5 rounded-lg border border-text/15 text-text font-semibold hover:border-accent/50 hover:text-accent transition-colors",
-      href: "/docs",
+      href: "/docs/",
     )[Read the Docs]
   ]
 ]

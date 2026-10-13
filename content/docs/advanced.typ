@@ -1,9 +1,10 @@
-#import "/templates/docs.typ": docs-page
+#import "@tola/source:0.0.0": tola-meta
 
-#show: docs-page.with(
+#tola-meta((
   title: "Building a Backend",
   summary: "Build your own MotionGfx backend by implementing SubjectSource for your world type, with no engine required.",
-)
+  layout: "docs",
+))
 
 = Building a Backend
 

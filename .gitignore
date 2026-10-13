@@ -1,5 +1,8 @@
 /public
+/.public-publish
 /.tola
+/.tola-build.lock
+/assets/generated
 /node_modules
 content/.tola
 .DS_Store

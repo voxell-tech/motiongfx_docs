@@ -13,6 +13,10 @@
     --color-green: #a9dc76;
 }
 
+/* In-page links (the home page's "New: Moxie" pill) glide to their
+   target instead of jumping. */
+html { scroll-behavior: smooth; }
+
 /* Syntax highlighting. Typst highlights code blocks at build time with
    the dark Monokai Pro theme (templates/monokai-pro.tmTheme), baking each
    token's color in as an inline `style="color: ..."`. Light mode remaps

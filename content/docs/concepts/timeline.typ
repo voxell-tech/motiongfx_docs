@@ -1,10 +1,11 @@
-#import "/templates/docs.typ": docs-page
+#import "@tola/source:0.0.0": tola-meta
 #import "/components/ui.typ" as ui
 
-#show: docs-page.with(
+#tola-meta((
   title: "Timeline",
   summary: "Compile fragments into a track, bake it once, and sample it at any point in time, forward or backward.",
-)
+  layout: "docs",
+))
 
 = Timeline
 

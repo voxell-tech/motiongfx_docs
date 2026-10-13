@@ -1,28 +1,29 @@
 // Docs sidebar data and components.
 // Import: #import "/components/docs-nav.typ": sidebar, page-nav
-
-#import "@tola/current:0.0.0": current-permalink
+//
+// Both take `current`, the route of the page being rendered (e.g.
+// "/docs/bevy/"), to mark the active chapter and find its neighbors.
 
 #let groups = (
   (
     title: "Choose a Backend",
     items: (
-      (title: "Overview", href: "/docs"),
-      (title: "Bevy MotionGfx", href: "/docs/bevy"),
+      (title: "Overview", href: "/docs/"),
+      (title: "Bevy MotionGfx", href: "/docs/bevy/"),
     ),
   ),
   (
     title: "Concepts",
     items: (
-      (title: "Actions", href: "/docs/concepts/actions"),
-      (title: "Ordering", href: "/docs/concepts/ordering"),
-      (title: "Timeline", href: "/docs/concepts/timeline"),
+      (title: "Actions", href: "/docs/concepts/actions/"),
+      (title: "Ordering", href: "/docs/concepts/ordering/"),
+      (title: "Timeline", href: "/docs/concepts/timeline/"),
     ),
   ),
   (
     title: "Advanced",
     items: (
-      (title: "Building a Backend", href: "/docs/advanced"),
+      (title: "Building a Backend", href: "/docs/advanced/"),
     ),
   ),
 )
@@ -31,8 +32,8 @@
 // walks to find what comes after the current page.
 #let flat-items = groups.map(g => g.items).flatten()
 
-// Canonical permalinks end in "/" (e.g. "/docs/bevy/"); hrefs above don't.
-// Strip a trailing slash from both sides before comparing.
+// Strip a trailing slash from both sides before comparing, so an href
+// written without one still matches its route.
 #let norm(path) = if path != none and path != "/" and path.ends-with("/") {
   path.slice(0, -1)
 } else {
@@ -49,7 +50,7 @@
 // across engines, so keeping it open on desktop is a few lines of JS
 // (setting `.open` directly) rather than a `display` override; the same
 // script also closes the mobile drawer on backdrop/link/close clicks.
-#let sidebar() = html.elem("details", attrs: (
+#let sidebar(current) = html.elem("details", attrs: (
   class: "docs-nav inline-block text-sm md:block md:fixed md:top-24 md:left-0 md:w-56 md:h-[calc(100vh-6rem)] md:overflow-y-auto md:px-4",
 ))[
   #html.elem("summary", attrs: (class: "docs-nav-toggle"))[
@@ -107,7 +108,7 @@
         )[#group.title]
         #html.div(class: "flex flex-col gap-0.5")[
           #for item in group.items {
-            let active = norm(current-permalink) == norm(item.href)
+            let active = norm(current) == norm(item.href)
             let link-class = if active {
               "block px-3 py-2 rounded-lg bg-surface text-accent font-medium"
             } else {
@@ -127,9 +128,9 @@
 /// remaining one still takes its own column so it doesn't stretch full
 /// width alone. Called automatically by `templates/docs.typ`, so
 /// individual pages don't hand-write their own "== Next" section.
-#let page-nav() = {
+#let page-nav(current) = {
   let idx = flat-items.position(item => (
-    norm(item.href) == norm(current-permalink)
+    norm(item.href) == norm(current)
   ))
   if idx == none { return none }
 

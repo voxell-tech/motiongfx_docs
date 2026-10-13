@@ -1,9 +1,10 @@
-#import "/templates/docs.typ": docs-page
+#import "@tola/source:0.0.0": tola-meta
 
-#show: docs-page.with(
+#tola-meta((
   title: "Actions",
   summary: "An action describes what should change on a field. Learn how to create one with the builder and give it timing with play().",
-)
+  layout: "docs",
+))
 
 = Actions
 

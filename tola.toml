@@ -1,75 +1,61 @@
 # ==============================================================================
-# Tola Configuration
+# Tola Configuration (v0.8.0)
 # ==============================================================================
 
-[site.info]
+[site]
+origin = "https://motiongfx.voxell.dev"
 title = "MotionGfx"
-email = "voxell.technologies@gmail.com"
 description = "A backend agnostic motion graphics creation framework. Free and open-source forever."
 language = "en"
-url = "https://motiongfx.voxell.dev"
 
-[site.header]
-icon = "assets/favicon/favicon.ico"
-elements = [
-  '<meta name="darkreader-lock">',
-  '<script src="/scripts/theme.js"></script>',
-]
-
-[site.nav]
-spa = true
-
-[site.seo]
-# Off: templates/seo.typ emits per-page descriptions and OG tags instead.
-auto_og = false
-
-[site.seo.feed]
-enable = false
-
-[site.seo.sitemap]
-enable = true
-path = "sitemap.xml"
+[site.extra]
+email = "voxell.technologies@gmail.com"
 
 [build]
-content = "content"
-output = "public"
-minify = true
-deps = ["templates", "utils", "components", "shared"]
+# site.typ decides which sources under content/ are published and where.
+entry = "site.typ"
+content-dir = "content"
+publish-dir = "public"
 
-[build.assets]
-nested = [
-  "assets/styles",
-  "assets/js",
-  "assets/wasm",
-  "assets/images",
-  "shared/icons",
-  "shared/scripts"
-]
-# Serve the favicon at the site root (/favicon.ico), the path browsers
-# auto-request. Site-specific icons (not shared across Voxell's sites,
-# so they don't belong in shared/icons/) go here too, one at a time,
-# since `nested` maps a whole directory to its basename and assets/icons
-# would collide with shared/icons both wanting to output to /icons.
-flatten = [
-  { file = "assets/favicon/favicon.ico", as = "favicon.ico" },
-  { file = "assets/icons/bevy.svg", as = "icons/bevy.svg" },
-  { file = "assets/robots.txt", as = "robots.txt" }
-]
-
-[build.slug]
-path = "safe"
-fragment = "full"
-separator = "dash"
-case = "lower"
-
-# Tailwind CSS - enabled by default in this template
-# Make sure tailwindcss is installed: npm install -g tailwindcss
-[build.hooks.css]
+# Tailwind CSS. Make sure tailwindcss is installed: npm install -g tailwindcss
+# The output is a build product (gitignored), published by [assets] below.
+[[build.hooks.before-build]]
 enable = true
-path = "assets/styles/tailwind.css"
-command = ["tailwindcss"]
+name = "tailwind"
+command = [
+  "tailwindcss",
+  "-i", "assets/styles/tailwind.css",
+  "-o", "assets/generated/tailwind.css",
+]
+dev = "run"
+rerun-on = ["assets/styles", "shared/styles.css"]
+generates = ["assets/generated/tailwind.css"]
 
-[serve]
+[assets]
+# Adds ?h=<hash> to URLs from `url-of-asset` (the stylesheet and favicon).
+cache-busting = true
+trees = [
+  { source = "assets/js", url-prefix = "/js" },
+  { source = "assets/wasm", url-prefix = "/wasm" },
+  { source = "assets/images", url-prefix = "/images" },
+  { source = "shared/icons", url-prefix = "/icons" },
+  { source = "shared/scripts", url-prefix = "/scripts" },
+]
+files = [
+  { source = "assets/generated/tailwind.css", url = "/styles/tailwind.css" },
+  { source = "assets/favicon/favicon.ico", url = "/favicon.ico" },
+  # Site-specific icons (not shared across Voxell's sites, so they don't
+  # belong in shared/icons/) go here, one at a time, alongside the
+  # shared ones at /icons.
+  { source = "assets/icons/bevy.svg", url = "/icons/bevy.svg" },
+  { source = "assets/robots.txt", url = "/robots.txt" },
+  # GitHub Pages custom domain.
+  { source = "CNAME", url = "/CNAME" },
+]
+
+[server]
 interface = "127.0.0.1"
 port = 5279
+
+[dev]
 watch = true

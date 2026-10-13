@@ -1,9 +1,10 @@
-#import "/templates/docs.typ": docs-page
+#import "@tola/source:0.0.0": tola-meta
 
-#show: docs-page.with(
+#tola-meta((
   title: "Bevy MotionGfx",
   summary: "Set up Bevy MotionGfx in a Bevy project: add the plugin, spawn something to animate, and play a timeline.",
-)
+  layout: "docs",
+))
 
 = Bevy MotionGfx
 
@@ -94,10 +95,10 @@ Continuing inside the same `build_timeline` function:
 ```
 
 `motiongfx.create_builder()` gives you the same `b` the rest of these
-docs talk about. See #link("/docs/concepts/actions")[Actions] for what
-`.act()`'s three arguments mean, #link("/docs/concepts/ordering")[Ordering]
+docs talk about. See #link("/docs/concepts/actions/")[Actions] for what
+`.act()`'s three arguments mean, #link("/docs/concepts/ordering/")[Ordering]
 for combinators like `.ord_all()`, and
-#link("/docs/concepts/timeline")[Timeline] for what `.compile()` and
+#link("/docs/concepts/timeline/")[Timeline] for what `.compile()` and
 `b.compile()` actually produce.
 
 `RealtimePlayer` samples the timeline every frame and writes the

@@ -1,10 +1,11 @@
-#import "/templates/docs.typ": docs-page
+#import "@tola/source:0.0.0": tola-meta
 #import "/components/ui.typ" as ui
 
-#show: docs-page.with(
+#tola-meta((
   title: "Ordering",
   summary: "Combine animation fragments with chain, all, any, flow, and delay, with a live demo of each.",
-)
+  layout: "docs",
+))
 
 = Ordering
 
