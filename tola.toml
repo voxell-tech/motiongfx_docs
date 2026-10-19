@@ -8,9 +8,6 @@ title = "MotionGfx"
 description = "A backend agnostic motion graphics creation framework. Free and open-source forever."
 language = "en"
 
-[site.extra]
-email = "voxell.technologies@gmail.com"
-
 [build]
 # site.typ decides which sources under content/ are published and where.
 entry = "site.typ"

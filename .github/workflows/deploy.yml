@@ -10,6 +10,10 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  # tola-ssg commit the site is built with (0.8.0, Oct 12).
+  TOLA_REV: 98f5c290da96192c8cb18704a51cf28d7285559a
+
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -23,10 +27,20 @@ jobs:
         with:
           submodules: recursive
 
+      # Built from a pinned commit: upstream's v0.8.0 tag has moved
+      # since its release binaries were built, and those binaries can't
+      # build this site. Cached, so it only compiles when TOLA_REV
+      # changes.
+      - name: Cache Tola
+        id: tola-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/tola
+          key: tola-${{ env.TOLA_REV }}
+
       - name: Install Tola
-        run: |
-          curl -fsSL https://github.com/tola-rs/tola-ssg/releases/download/v0.8.0/tola-0.8.0-x86_64-unknown-linux-musl.tar.gz | tar -xz
-          sudo mv tola /usr/local/bin/
+        if: steps.tola-cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --git https://github.com/tola-rs/tola-ssg --rev "$TOLA_REV" tola
 
       - name: Install Tailwind CSS
         run: |
