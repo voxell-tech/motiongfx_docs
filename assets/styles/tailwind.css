@@ -115,10 +115,7 @@ body {
     @apply text-7xl sm:text-9xl font-black tracking-tighter leading-none mb-5;
 }
 .mgfx-hero-gfx {
-    background: linear-gradient(100deg, var(--color-accent) 10%, var(--color-purple) 55%, var(--color-red) 95%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-accent);
 }
 
 /* The lane: the hero timeline's steps as blocks, with a playhead. */
