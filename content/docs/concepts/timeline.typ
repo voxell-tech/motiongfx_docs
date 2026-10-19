@@ -1,5 +1,5 @@
 #import "@tola/source:0.0.0": tola-meta
-#import "/components/ui.typ" as ui
+#import "/components/player.typ" as player
 
 #tola-meta((
   title: "Timeline",
@@ -56,7 +56,7 @@ In the demo below, six circles fly in on a stagger, growing and changing
 color, then a bounce ripples through the row. All of it is one baked
 `Track`, sampled at whatever time the scrubber asks for.
 
-#ui.live-demo(
+#player.live-demo(
   id: "timeline-showcase-demo",
   script: "/js/demos/timeline-showcase.js",
   caption: [Flow in, then a bounce ripples through the row, flashing color as it goes.],

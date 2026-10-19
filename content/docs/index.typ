@@ -1,6 +1,5 @@
 #import "@tola/source:0.0.0": tola-meta
-#import "/components/ui.typ" as ui
-#import "/components/layout.typ" as layout
+#import "/shared/site/ui.typ" as ui
 
 #tola-meta((
   title: "Choose a Backend",
@@ -13,7 +12,7 @@
 MotionGfx describes animations. A backend crate connects that description
 to something you can actually see.
 
-#layout.grid(
+#ui.grid(
   cols: 2,
   gap: 4,
   ui.card(title: [#link("/docs/bevy/")[Bevy MotionGfx →]])[
