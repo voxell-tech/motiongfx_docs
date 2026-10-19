@@ -37,8 +37,11 @@ export function signal(runtime, name, initial) {
 
 let wasmReady = null;
 
+// The wasm's hashed address, from the meta tag project.typ puts on
+// every page, so the glue and the wasm always come from one build.
 function loadWasm() {
-  wasmReady ??= init();
+  const wasm = document.querySelector('meta[name="mgfx-wasm"]')?.content;
+  wasmReady ??= init(wasm ? { module_or_path: wasm } : undefined);
   return wasmReady;
 }
 
