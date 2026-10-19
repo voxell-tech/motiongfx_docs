@@ -79,3 +79,151 @@
     @apply text-subtle text-xs shrink-0;
     font-variant-numeric: tabular-nums;
 }
+
+/* Landing hero (assets/js/hero.js). It breaks out of the kit's centred
+   column to fill the screen under the nav (49px tall); `main` pads
+   2rem above it, which the negative margin takes back. */
+body {
+    overflow-x: clip;
+}
+
+.mgfx-hero {
+    @apply relative flex flex-col overflow-hidden;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-top: -2rem;
+    height: calc(100svh - 49px);
+    min-height: 640px;
+}
+
+.mgfx-hero-canvas {
+    @apply absolute inset-0 w-full h-full;
+}
+
+/* Keeps the title readable when a wave of bars rolls behind it. */
+.mgfx-hero-scrim {
+    @apply absolute inset-0 pointer-events-none;
+    background: radial-gradient(ellipse 40% 30% at 50% 32%, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 70%, transparent) 55%, transparent 100%);
+}
+
+.mgfx-hero-content {
+    @apply relative z-10 flex-1 flex flex-col items-center text-center px-4;
+    padding-top: 11svh;
+}
+
+.mgfx-hero-title {
+    @apply text-7xl sm:text-9xl font-black tracking-tighter leading-none mb-5;
+}
+.mgfx-hero-gfx {
+    background: linear-gradient(100deg, var(--color-accent) 10%, var(--color-purple) 55%, var(--color-red) 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* The lane: the hero timeline's steps as blocks, with a playhead. */
+.mgfx-hero-timeline {
+    @apply relative z-10 w-full max-w-4xl mx-auto px-4 pb-6;
+}
+
+.mgfx-lane-row {
+    @apply flex items-center gap-3;
+}
+
+.mgfx-lane-play {
+    @apply shrink-0 flex items-center justify-center w-10 h-10 rounded-full border border-text/15 bg-bg/70 backdrop-blur text-text cursor-pointer transition-colors;
+}
+.mgfx-lane-play:hover {
+    @apply border-accent/60 text-accent;
+}
+.mgfx-lane-play::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 2.5v11l10-5.5z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 2.5v11l10-5.5z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.mgfx-lane-play[data-playing]::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='3' y='2' width='4' height='12'/%3E%3Crect x='9' y='2' width='4' height='12'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='3' y='2' width='4' height='12'/%3E%3Crect x='9' y='2' width='4' height='12'/%3E%3C/svg%3E");
+}
+
+.mgfx-lane {
+    @apply relative flex-1 h-11 rounded-lg border border-text/10 bg-bg/60 backdrop-blur cursor-ew-resize select-none;
+    touch-action: none;
+}
+.mgfx-lane:focus-visible {
+    @apply outline-2 outline-accent;
+}
+
+.mgfx-lane-block {
+    @apply absolute top-1 bottom-1 flex items-center gap-1.5 px-2 rounded-md border border-accent/20 bg-accent/10 text-xs overflow-hidden whitespace-nowrap transition-colors;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+.mgfx-lane-block code {
+    @apply bg-transparent p-0 text-accent font-mono font-semibold text-xs;
+}
+.mgfx-lane-block span {
+    @apply text-muted truncate;
+}
+.mgfx-lane-block[data-active] {
+    @apply bg-accent/25 border-accent/60;
+}
+.mgfx-lane-block[data-active] span {
+    @apply text-text;
+}
+
+.mgfx-lane-head {
+    @apply absolute -top-1 -bottom-1 w-0.5 rounded-full bg-red pointer-events-none;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px var(--color-red);
+}
+.mgfx-lane[data-scrubbing] .mgfx-lane-head {
+    @apply w-1;
+}
+
+.mgfx-lane-time {
+    @apply shrink-0 w-24 text-right text-xs text-subtle;
+    font-variant-numeric: tabular-nums;
+}
+
+/* On a phone the blocks are narrow: keep the combinator, drop the
+   step's name. */
+@media (max-width: 640px) {
+    .mgfx-lane-block span {
+        display: none;
+    }
+    .mgfx-lane-time {
+        @apply w-auto;
+    }
+}
+
+.mgfx-lane-caption {
+    @apply mt-2 text-center text-xs text-muted;
+}
+
+/* Ordering playground (components/ordering.typ's `tabs`). */
+.ordering-tabs {
+    @apply max-w-5xl mx-auto;
+}
+.ordering-tab-row {
+    @apply flex flex-wrap justify-center gap-2 mb-6;
+}
+.ordering-tab {
+    @apply px-4 py-2 rounded-full border border-text/10 bg-transparent text-muted cursor-pointer transition-colors;
+}
+.ordering-tab:hover {
+    @apply text-text border-text/30;
+}
+.ordering-tab[aria-selected="true"] {
+    @apply bg-accent text-bg border-accent;
+}
+.ordering-tab code {
+    @apply bg-transparent p-0 text-base font-semibold;
+    color: inherit;
+}
+.ordering-panel[hidden] {
+    display: none;
+}

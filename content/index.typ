@@ -1,6 +1,7 @@
 #import "@tola/source:0.0.0": tola-meta
 #import "/shared/site/ui.typ" as ui
 #import "/components/player.typ" as player
+#import "/components/ordering.typ" as ordering
 #import "/project.typ": newsletter-form
 
 #tola-meta((
@@ -8,18 +9,69 @@
   summary: "MotionGfx is a backend agnostic motion graphics creation framework for Rust. Free and open-source forever.",
 ))
 
-#ui.hero(
-  [Motion#html.span(class: "text-accent")[Gfx]],
-  pill: ui.pill(
-    "#moxie",
-  )[✨ New: Moxie, a visual editor for MotionGfx ↓],
-  tagline: [A *backend agnostic* motion graphics creation framework.],
-  subtitle: [Free and open-source forever!],
-  actions: (
-    ui.button("/docs/", large: true)[Get Started],
-    ui.github-button("https://github.com/voxell-tech/motiongfx"),
-  ),
-)
+// Hero: assets/js/hero.js plays one MotionGfx timeline behind the
+// title, and draws its steps into the lane at the bottom, where
+// dragging scrubs it. Built in code mode: in markup, the whitespace
+// between elements becomes spans that the flex layout picks up.
+#html.elem("section", attrs: (
+  class: "mgfx-hero",
+  data-demo-src: "/js/hero.js",
+), {
+  html.elem("canvas", attrs: (
+    class: "mgfx-hero-canvas",
+    role: "img",
+    aria-label: "Bars ripple in, rise, roll a wave, and ripple out, animated live by MotionGfx",
+  ))[]
+  html.div(class: "mgfx-hero-scrim")[]
+  html.div(class: "mgfx-hero-content", {
+    ui.pill("#moxie")[✨ New: Moxie, a visual editor for MotionGfx ↓]
+    html.h1(class: "mgfx-hero-title", {
+      [Motion]
+      html.span(class: "mgfx-hero-gfx")[Gfx]
+    })
+    html.p(class: "text-subtle text-lg sm:text-2xl max-w-2xl mb-2")[
+      A *backend agnostic* motion graphics creation framework.
+    ]
+    html.p(class: "text-muted mb-8")[Free and open-source forever!]
+    html.div(class: "flex flex-wrap justify-center gap-3", {
+      ui.button("/docs/", large: true)[Get Started]
+      ui.github-button("https://github.com/voxell-tech/motiongfx")
+    })
+  })
+  html.div(class: "mgfx-hero-timeline", {
+    html.div(class: "mgfx-lane-row", {
+      html.elem("button", attrs: (
+        type: "button",
+        class: "mgfx-lane-play",
+        aria-label: "Pause",
+      ))[]
+      html.elem("div", attrs: (
+        class: "mgfx-lane",
+        role: "slider",
+        tabindex: "0",
+        aria-label: "Scrub the hero's timeline",
+        aria-valuemin: "0",
+      ))[]
+      html.span(class: "mgfx-lane-time")[]
+    })
+    html.p(class: "mgfx-lane-caption")[
+      This whole scene is one MotionGfx timeline. Drag the lane to
+      scrub it, forward or back.
+    ]
+  })
+})
+
+// Playground: the five ordering combinators as tabs.
+#html.section(class: "py-16 sm:py-24")[
+  #ui.section-heading(
+    [Five Ways to Order a Timeline],
+    [
+      Every animation above is built from these. Pick one and watch
+      the same shapes replay under it.
+    ],
+  )
+  #ordering.tabs
+]
 
 #ui.hr
 

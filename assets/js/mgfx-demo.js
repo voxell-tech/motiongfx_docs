@@ -42,6 +42,9 @@ function loadWasm() {
   return wasmReady;
 }
 
+/** Resolves once the wasm runtime is loaded, for scenes that run their own playback (the landing hero). */
+export const ready = loadWasm;
+
 function formatSeconds(seconds) {
   return `${seconds.toFixed(2)}s`;
 }
